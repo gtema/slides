@@ -3,37 +3,35 @@
 header: "StackMon: Observation of OpenStack clouds status"
 footer: "![w:1em](https://docs.otc.t-systems.com/_static/images/dt-magenta.svg) Open Telekom Cloud for OpenInfra Summit 2023"
 title: "StackMon"
+transition: push
+style: |
+  section {
+    padding: 50px;
+  }
+  
+  header,
+  footer {
+    position: absolute;
+    left: 50px;
+    right: 50px;
+    height: 20px;
+  }
+  
+  header {
+    top: 30px;
+  }
+  
+  footer {
+    bottom: 30px;
+  }
+  
+  h1, 
+  h2, 
+  h3
+  {
+    color: #e20074;
+  }
 ---
-
-<style>
-section {
-  padding: 50px;
-}
-
-header,
-footer {
-  position: absolute;
-  left: 50px;
-  right: 50px;
-  height: 20px;
-}
-
-header {
-  top: 30px;
-}
-
-footer {
-  bottom: 30px;
-}
-
-h1, 
-h2, 
-h3
-{
-  color: #e20074;
-}
-
-</style>
 
 # StackMon
 
@@ -87,14 +85,13 @@ What we wanted is:
 
 - ApiMon - Ansible driven playbook scheduler/executor
 - EpMon - Endpoint monitoring
-- xxx - Arbitrary testing container doing something and producing metrics
+- Arbitrary testing container doing something and producing metrics
 
 ---
 ## ApiMon
 
 ```yaml
-- name: Test Image
-  hosts: localhost
+- hosts: localhost
   tasks:
     - block:
         - name: List Images
@@ -104,17 +101,10 @@ What we wanted is:
           openstack.cloud.image_info:
             image: "Standard_Fedora_38_latest"
 
-        - name: Create directory for images
-          ansible.builtin.file:
-            name: /tmp/ansible/images
-            state: directory
-            recurse: true
-
         - name: Download cirros image
           ansible.builtin.get_url:
             url: https://download.cirros-cloud.net/0.6.0/cirros-0.6.0-x86_64-disk.img
             dest: /tmp/ansible/images/cirros.img
-            validate_certs: false
 
         - name: Upload cirros image
           openstack.cloud.image:
@@ -173,7 +163,7 @@ For complex cases custom metrics are captured by Ansible callback plugin.
 ```
 
 ---
-## Generic StackMon plugin
+## Generic StackMon plugin (LB)
 
 Testing Load Balancer
 ![h:500 center](lb.svg)

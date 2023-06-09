@@ -56,15 +56,13 @@ Testing options
 
   - ApiMon - Ansible driven playbook scheduler/executor
   - EpMon - Endpoint monitoring
-  - xxx - Arbitrary testing container doing something and producing metrics
+  - Arbitrary testing container doing something and producing metrics
 
-ApiMon
 ------
 
 .. code:: yaml
 
-   - name: Test Image
-     hosts: localhost
+   - hosts: localhost
      tasks:
        - block:
            - name: List Images
@@ -74,17 +72,10 @@ ApiMon
              openstack.cloud.image_info:
                image: "Standard_Fedora_38_latest"
 
-           - name: Create directory for images
-             ansible.builtin.file:
-               name: /tmp/ansible/images
-               state: directory
-               recurse: true
-
            - name: Download cirros image
              ansible.builtin.get_url:
                url: https://download.cirros-cloud.net/0.6.0/cirros-0.6.0-x86_64-disk.img
                dest: /tmp/ansible/images/cirros.img
-               validate_certs: false
 
            - name: Upload cirros image
              openstack.cloud.image:
@@ -133,7 +124,7 @@ For complex cases custom metrics are captured by Ansible callback plugin.
 
 .. code:: yaml
 
-   - name\: "Create Volume in {{ availability_zone }}"
+   - name: "Create Volume in {{ availability_zone }}"
      openstack.cloud.volume:
        state: present
        availability_zone: "{{ availability_zone | default(omit) }}"
@@ -142,8 +133,8 @@ For complex cases custom metrics are captured by Ansible callback plugin.
      tags:
        - "metric=create_volume"
 
-Generic StackMon plugin
------------------------
+Generic StackMon plugin (LB)
+----------------------------
 
 .. image:: lb.svg
    :height: 500px

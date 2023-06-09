@@ -1,6 +1,6 @@
 flowchart LR
 
-  subgraph zone1
+  subgraph zone1[zone_DE]
     test1["Test Load 1"]
     test2["Test Load 2"]
     statsd1
@@ -9,7 +9,7 @@ flowchart LR
     statsd1 --> graphite1
   end
 
-  subgraph zone2
+  subgraph zone2[zone_NL]
     test3["Test Load 3"]
     statsd2
     graphite2
@@ -17,11 +17,11 @@ flowchart LR
     statsd2 --> graphite2
   end
 
-  subgraph env1 ["Region 1"]
+  subgraph env1 ["Region Germany"]
     srv11
     srv12
   end
-  subgraph env2["Region 2"]
+  subgraph env2["Region US"]
     srv21
     srv22
   end
