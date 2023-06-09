@@ -321,6 +321,7 @@ h3
 <li>Metric Processor converts raw data into flags and semapthores with complex<br />
 logic</li>
 <li>Status dashboard visualizes service semaphores</li>
+<li>Grafana visualizes service behavior, trends, etc</li>
 </ul>
 <footer><img src="https://docs.otc.t-systems.com/_static/images/dt-magenta.svg" alt="" style="width:1em;" /> Open Telekom Cloud for OpenInfra Summit 2023</footer>
 </section>
@@ -529,8 +530,6 @@ h3
           <span class="hljs-attr">openstack.cloud.image:</span>
             <span class="hljs-attr">name:</span> <span class="hljs-string">&quot;<span class="hljs-template-variable">{{ image_name }}</span>&quot;</span>
             <span class="hljs-attr">state:</span> <span class="hljs-string">absent</span>
-          <span class="hljs-attr">tags:</span>
-            <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;metric=image_delete&quot;</span>
 </code></pre>
 <footer><img src="https://docs.otc.t-systems.com/_static/images/dt-magenta.svg" alt="" style="width:1em;" /> Open Telekom Cloud for OpenInfra Summit 2023</footer>
 </section>
@@ -660,8 +659,10 @@ h3
 ;--theme:default;" data-transition-back="{&quot;name&quot;:&quot;push&quot;,&quot;builtinFallback&quot;:true}" data-transition="{&quot;name&quot;:&quot;push&quot;,&quot;builtinFallback&quot;:true}">
 <header>StackMon: Observation of OpenStack clouds status</header>
 <h2 id="under-the-hood-openstacksdk">Under the hood (OpenStackSDK)</h2>
-<p>OpenStackSDK used by Ansible (ApiMon) and EpMon emits StatsD metrics.</p>
-<p>For complex cases custom metrics are captured by Ansible callback plugin.</p>
+<p>OpenStackSDK used by Ansible (ApiMon) and EpMon emits<br />
+StatsD metrics out of the box.</p>
+<p>For complex cases custom metrics are captured by Ansible<br />
+callback plugin.</p>
 <pre is="marp-pre" data-auto-scaling="downscale-only"><code class="language-yaml"><span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">&quot;Create Volume in <span class="hljs-template-variable">{{ availability_zone }}</span>&quot;</span>
   <span class="hljs-attr">openstack.cloud.volume:</span>
     <span class="hljs-attr">state:</span> <span class="hljs-string">present</span>

@@ -74,6 +74,7 @@ What we wanted is:
   - Metric Processor converts raw data into flags and semapthores with complex
     logic
   - Status dashboard visualizes service semaphores
+  - Grafana visualizes service behavior, trends, etc
 
 ---
 ## Design
@@ -121,8 +122,6 @@ What we wanted is:
           openstack.cloud.image:
             name: "{{ image_name }}"
             state: absent
-          tags:
-            - "metric=image_delete"
 ```
 
 ---
@@ -147,9 +146,11 @@ Dummy GET requests to the URL of the endpoint
 ---
 ## Under the hood (OpenStackSDK)
 
-OpenStackSDK used by Ansible (ApiMon) and EpMon emits StatsD metrics.
+OpenStackSDK used by Ansible (ApiMon) and EpMon emits
+StatsD metrics out of the box.
 
-For complex cases custom metrics are captured by Ansible callback plugin.
+For complex cases custom metrics are captured by Ansible
+callback plugin.
 
 ``` yaml
 - name: "Create Volume in {{ availability_zone }}"

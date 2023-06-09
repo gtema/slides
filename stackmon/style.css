@@ -226,8 +226,9 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   display: block;
   padding: 5px;
   /*max-height: 400px;*/
+  line-height: 1;
   word-wrap: normal;
-  font-size: 0.8em;
+  font-size: 0.7em;
   max-height: unset;
   overflow: scroll;
 

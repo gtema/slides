@@ -146,8 +146,10 @@ resources)</li>
 <li class="fragment">Metrics processed through StatsD and stored in
 Graphite</li>
 <li class="fragment">Metric Processor converts raw data into flags and
-semapthores with complex logic</li>
+semaphores with complex logic</li>
 <li class="fragment">Status dashboard visualizes service semaphores</li>
+<li class="fragment">Grafana visualizes service behavior, trends,
+etc</li>
 </ul>
 </section>
 <section id="high-level-design" class="slide level1">
@@ -164,8 +166,8 @@ scheduler/executor</li>
 producing metrics</li>
 </ul>
 </section>
-<section class="slide level1">
-
+<section id="apimon" class="slide level1">
+<h1>ApiMon</h1>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">hosts</span><span class="kw">:</span><span class="at"> localhost</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">tasks</span><span class="kw">:</span></span>
@@ -185,20 +187,13 @@ class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Upload cirros image</span></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">openstack.cloud.image</span><span class="kw">:</span></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ image_name }}&quot;</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">container_format</span><span class="kw">:</span><span class="at"> bare</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">disk_format</span><span class="kw">:</span><span class="at"> qcow2</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">is_protected</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">filename</span><span class="kw">:</span><span class="at"> /tmp/ansible/images/cirros.img</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">tags</span><span class="kw">:</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;metric=image_upload&quot;</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">always</span><span class="kw">:</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Delete cirros image</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">openstack.cloud.image</span><span class="kw">:</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ image_name }}&quot;</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">state</span><span class="kw">:</span><span class="at"> absent</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">tags</span><span class="kw">:</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;metric=image_delete&quot;</span></span></code></pre></div>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">filename</span><span class="kw">:</span><span class="at"> /tmp/ansible/images/cirros.img</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">always</span><span class="kw">:</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Delete cirros image</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="at">          </span><span class="fu">openstack.cloud.image</span><span class="kw">:</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ image_name }}&quot;</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="at">            </span><span class="fu">state</span><span class="kw">:</span><span class="at"> absent</span></span></code></pre></div>
 </section>
 <section id="epmon" class="slide level1">
 <h1>EpMon</h1>
@@ -219,8 +214,8 @@ class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb2-1"><a href="
 </section>
 <section id="under-the-hood-openstacksdk" class="slide level1">
 <h1>Under the hood (OpenStackSDK)</h1>
-<p>OpenStackSDK used by Ansible (ApiMon) and EpMon emits StatsD
-metrics.</p>
+<p>OpenStackSDK used by Ansible (ApiMon) and EpMon emits StatsD metrics
+out of the box.</p>
 <p>For complex cases custom metrics are captured by Ansible callback
 plugin.</p>
 <div class="sourceCode" id="cb3"><pre
@@ -450,7 +445,9 @@ href="https://stackmon.github.io">https://stackmon.github.io</a></li>
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1000,
+        width: 1200,
+
+        height: 800,
 
         // reveal.js plugins
         plugins: [

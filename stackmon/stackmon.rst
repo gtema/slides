@@ -41,9 +41,10 @@ How (are we doing that)
   - Metrics emited by OpenStackSDK under the hood
   - Additional metrics gathering plugins (i.e. static resources)
   - Metrics processed through StatsD and stored in Graphite
-  - Metric Processor converts raw data into flags and semapthores with complex
+  - Metric Processor converts raw data into flags and semaphores with complex
     logic
   - Status dashboard visualizes service semaphores
+  - Grafana visualizes service behavior, trends, etc
 
 High Level Design
 -----------------
@@ -58,6 +59,9 @@ Testing options
   - EpMon - Endpoint monitoring
   - Arbitrary testing container doing something and producing metrics
 
+------
+
+ApiMon
 ------
 
 .. code:: yaml
@@ -80,20 +84,13 @@ Testing options
            - name: Upload cirros image
              openstack.cloud.image:
                name: "{{ image_name }}"
-               container_format: bare
-               disk_format: qcow2
-               is_protected: false
                filename: /tmp/ansible/images/cirros.img
-             tags:
-               - "metric=image_upload"
 
          always:
            - name: Delete cirros image
              openstack.cloud.image:
                name: "{{ image_name }}"
                state: absent
-             tags:
-               - "metric=image_delete"
 
 EpMon
 -----
@@ -118,9 +115,11 @@ Dummy GET requests to the URL of the endpoint
 Under the hood (OpenStackSDK)
 -----------------------------
 
-OpenStackSDK used by Ansible (ApiMon) and EpMon emits StatsD metrics.
+OpenStackSDK used by Ansible (ApiMon) and EpMon emits
+StatsD metrics out of the box.
 
-For complex cases custom metrics are captured by Ansible callback plugin.
+For complex cases custom metrics are captured by Ansible
+callback plugin.
 
 .. code:: yaml
 
