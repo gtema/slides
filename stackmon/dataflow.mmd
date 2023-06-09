@@ -1,0 +1,43 @@
+flowchart LR
+
+  subgraph zone1
+    test1["Test Load 1"]
+    test2["Test Load 2"]
+    statsd1
+    graphite1
+    test1 & test2 --> statsd1
+    statsd1 --> graphite1
+  end
+
+  subgraph zone2
+    test3["Test Load 3"]
+    statsd2
+    graphite2
+    test3 --> statsd2
+    statsd2 --> graphite2
+  end
+
+  subgraph env1 ["Region 1"]
+    srv11
+    srv12
+  end
+  subgraph env2["Region 2"]
+    srv21
+    srv22
+  end
+  test1 --> env1
+  test2 --> env2
+  test3 --> env1 & env2
+
+  statsd2 --> graphite1
+  statsd1 --> graphite2
+
+  mp[Metric Processor]
+  sdb[Status Dashboard]
+  grafana[Grafana]
+
+  graphite1 & graphite2 --> mp
+  graphite1 & graphite2 --> grafana
+  mp --> sdb
+  mp --> grafana
+
