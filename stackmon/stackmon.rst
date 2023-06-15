@@ -4,7 +4,7 @@ StackMon
 StackMon
 --------
 
-**Observation platform for OpenStack based clouds**
+**Observation of OpenStack based clouds**
 
 * Artem Goncharov
 * Nils Magnus
@@ -21,9 +21,9 @@ Why (and why not ...XYZ)
 
 What we wanted is:
 
-  - Monitoring cloud from end user perspective
+  - Monitor cloud from end user perspective
   - different metric physics (latencies, rates, occurences)
-  - Events vs metrics
+  - Events vs metrics (logs)
   - easy extensibility and readability and clarity
   - status page with SLA calculation (convert raw metrics into service status)
   - **not invent another another monitoring system**
@@ -38,7 +38,7 @@ How (are we doing that)
 -----------------------
 
   - Ansible playbook as a testing scenario
-  - Metrics emited by OpenStackSDK under the hood
+  - API metrics emited by OpenStackSDK under the hood
   - Additional metrics gathering plugins (i.e. static resources)
   - Metrics processed through StatsD and stored in Graphite
   - Metric Processor converts raw data into flags and semaphores with complex

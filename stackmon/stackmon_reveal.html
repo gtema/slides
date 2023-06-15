@@ -103,7 +103,7 @@
 
 <section id="stackmon-1" class="slide level1">
 <h1>StackMon</h1>
-<p><strong>Observation platform for OpenStack based clouds</strong></p>
+<p><strong>Observation of OpenStack based clouds</strong></p>
 <ul>
 <li>Artem Goncharov</li>
 <li>Nils Magnus</li>
@@ -121,10 +121,10 @@
 <h1>Why (and why not ...XYZ)</h1>
 <p>What we wanted is:</p>
 <ul>
-<li class="fragment">Monitoring cloud from end user perspective</li>
+<li class="fragment">Monitor cloud from end user perspective</li>
 <li class="fragment">different metric physics (latencies, rates,
 occurences)</li>
-<li class="fragment">Events vs metrics</li>
+<li class="fragment">Events vs metrics (logs)</li>
 <li class="fragment">easy extensibility and readability and clarity</li>
 <li class="fragment">status page with SLA calculation (convert raw
 metrics into service status)</li>
@@ -140,7 +140,8 @@ system</strong></li>
 <h1>How (are we doing that)</h1>
 <ul>
 <li class="fragment">Ansible playbook as a testing scenario</li>
-<li class="fragment">Metrics emited by OpenStackSDK under the hood</li>
+<li class="fragment">API metrics emited by OpenStackSDK under the
+hood</li>
 <li class="fragment">Additional metrics gathering plugins (i.e. static
 resources)</li>
 <li class="fragment">Metrics processed through StatsD and stored in
