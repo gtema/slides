@@ -147,7 +147,7 @@ Data Flow
 Metric Processor
 ----------------
 
-When is service degraded is is experiencing outage?
+When is a service degraded or is experiencing outage?
 
   - latency of GET requests is above x sec?
   - POST to provision new resource fails?
