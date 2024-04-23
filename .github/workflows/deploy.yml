@@ -1,0 +1,32 @@
+---
+# .github/workflows/deploy.yml
+name: Deploy PR previews
+concurrency: deploy-${{ github.ref }}
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pandoc
+        uses: pandoc/actions/setup@v1.0.0
+        with:
+          version: 3.1.13
+
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: make
+
+      - uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: .
+          branch: gh-pages
+          clean-exclude: pr-preview
+          force: false
