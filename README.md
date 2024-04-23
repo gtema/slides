@@ -1,3 +1,3 @@
 Presentations
 
-[StackMon](stackmon/stackmon_marp.html)
+[StackMon](stackmon/stackmon_reveal.html)
