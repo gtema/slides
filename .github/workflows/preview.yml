@@ -1,5 +1,5 @@
 ---
-name: preview
+name: PR preview
 concurrency: preview-${{ github.ref }}
 
 on:
