@@ -1,11 +1,11 @@
 /**
- * White theme for reveal.js. This is the Open Telekom Cloud theme.
+ * White theme for reveal.js.
  *
  * By Artem Goncharov
  */
-@import url(./fonts/source-sans-pro/source-sans-pro.css);
+/* @import url(./fonts/source-sans-pro/source-sans-pro.css); */
 section.has-dark-background, section.has-dark-background h1, section.has-dark-background h2, section.has-dark-background h3, section.has-dark-background h4, section.has-dark-background h5, section.has-dark-background h6 {
-  color: #fff;
+  /*color: #fff;*/
 }
 
 /*********************************************
@@ -19,7 +19,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   --r-block-margin: 20px;
   --r-heading-margin: 0 0 20px 0;
   /* --r-heading-font: TeleNeo Office ExtraBold, Source Sans Pro, Helvetica, sans-serif;*/
-  --r-heading-color: #e20074;
+  --r-heading-color: #0f5fe1;
   --r-heading-line-height: 1.2;
   --r-heading-letter-spacing: normal;
   --r-heading-text-transform: normal;
@@ -387,8 +387,21 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 }
 
 .reveal {
-  /*background-image: url("https://docs-beta.otc.t-systems.com/_static/images/dt-magenta.svg");
-  background-position: bottom 1em left 1em;
+  /*background-position: bottom 1em left 1em;
   background-size: 1em;
   background-repeat: no-repeat;*/
+}
+
+.danger {
+  color: red;
+}
+
+.danger .title {
+  display: none;
+  font-weight: bold;
+  margin-left: !0px;
+}
+
+.danger p {
+  margin-left: 1em;
 }
