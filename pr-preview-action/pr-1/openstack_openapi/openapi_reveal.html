@@ -952,7 +952,7 @@ parameter serialization)</p>
 <section id="microversions" class="slide level1">
 <h1>Microversions</h1>
 <p>JSON schema <code>oneOf</code> with <code>x-openstack</code>
-extension and custom discriminator</p>
+extension and custom discriminator (polymorphism)</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">components</span><span class="kw">:</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">schemas</span><span class="kw">:</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">VolumesCreateRequest</span><span class="kw">:</span></span>
@@ -967,7 +967,7 @@ extension and custom discriminator</p>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="at">      ...</span></span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">x-openstack</span><span class="kw">:</span></span>
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">min-ver</span><span class="kw">:</span><span class="at"> </span><span class="fl">3.13</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">max-ver</span><span class="kw">:</span><span class="at"> </span><span class="fl">3.47</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">max-ver</span><span class="kw">:</span><span class="at"> </span><span class="fl">3.46</span></span>
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="at">    ...</span></span></code></pre></div>
 </section>
 <section id="rpc-style-actions-2" class="slide level1">
@@ -1018,6 +1018,16 @@ individual parameters)</li>
 <li>Query parameters may be combined for operation marking microversion
 constraints</li>
 </ul>
+<div class="sourceCode" id="cb10"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">...</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">    parameters:</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">      new_param:</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">        in: query</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">        name: foo_by_bar</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">        description: Filter foos by bars (new in microversion 2.45)</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">        schema:</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">          type: string</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">        x-openstack:</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">          min-ver: 2.45</span></span></code></pre></div>
 </section>
 <section id="and-whats-next" class="slide level1">
 <h1>And what’s next?</h1>
@@ -1026,7 +1036,7 @@ constraints</li>
 <h1>Let&#39;s build OpenAPI specs from service sources</h1>
 <ul>
 <li><p>Inspect source code of services</p></li>
-<li><p>Most services have json schema attached to the
+<li><p>Some services have json schema attached to the
 controllers</p></li>
 <li><p>Services use different frameworks (wsgi + routes, pecan, flask,
 etc)</p></li>
@@ -1121,15 +1131,16 @@ etc)</p></li>
 <li><p>No naming conventions</p></li>
 <li><p>Unified behavior for non-standard service API
 functionality</p></li>
-<li><p>JSON schema does not catch all of the schema errors</p></li>
+<li><p>Used JSON schema libraries have limited validation of the schema
+errors</p></li>
 <li><p>OpenAPI validation still does not catch all of the JSON schema
 errors</p>
 <p>=&gt; CodeGeneration catches lot of schema errors</p></li>
 </ul>
-<div class="sourceCode" id="cb10"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="er">&quot;type&quot;:</span> <span class="er">&quot;object&quot;,</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="er">&quot;properties&quot;:</span> <span class="fu">{</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;schema_version&quot;</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;string&quot;</span><span class="fu">}}</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="er">&quot;type&quot;:</span> <span class="er">&quot;object&quot;,</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="er">&quot;properties&quot;:</span> <span class="fu">{</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;schema_version&quot;</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;string&quot;</span><span class="fu">}}</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 </section>
 <section id="rust-tooling" class="slide level1">
 <h1>Rust Tooling 🦀💖</h1>
@@ -1225,18 +1236,19 @@ errors</p>
 <li>Unix philosophy: &quot;do one thing well&quot;</li>
 <li>Awesome performance</li>
 <li>Compiled binary</li>
+<li>Unavoidable consistency (matching to the API functionality)</li>
 <li>...</li>
 </ul>
 <div class="fragment">
 <ul>
-<li>Private project, <a href="https://github.com/sponsors/gtema">sponsoring</a> is 🥰</li>
+<li>Private project, <a href="https://github.com/sponsors/gtema">sponsoring</a> is very 🥰</li>
 </ul>
 </div>
 </section>
 <section id="next-steps" class="slide level1">
 <h1>Next Steps</h1>
 <ul>
-<li>Improve OpenStack pipeline of specs handling</li>
+<li>Improve OpenStack pipeline for handling specs</li>
 <li>Improve OpenStack services to add missing schema</li>
 <li>Continue extending generator targets (i.e. TUI, GopherCloud,
 OpenTofu)</li>

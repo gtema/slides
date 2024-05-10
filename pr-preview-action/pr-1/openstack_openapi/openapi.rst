@@ -194,7 +194,7 @@ Custom OpenAPI parameter serialization based on regex (similar to parameter seri
 Microversions
 -------------
 
-JSON schema ``oneOf`` with ``x-openstack`` extension and custom discriminator
+JSON schema ``oneOf`` with ``x-openstack`` extension and custom discriminator (polymorphism)
 
 .. code:: yaml
 
@@ -212,7 +212,7 @@ JSON schema ``oneOf`` with ``x-openstack`` extension and custom discriminator
          ...
          x-openstack:
            min-ver: 3.13
-           max-ver: 3.47
+           max-ver: 3.46
        ...
 
 RPC style Actions
@@ -271,6 +271,19 @@ Constraints
 - Query parameters may be combined for operation marking microversion
   constraints
 
+.. code:: yaml
+
+   ...
+       parameters:
+         new_param:
+           in: query
+           name: foo_by_bar
+           description: Filter foos by bars (new in microversion 2.45)
+           schema:
+             type: string
+           x-openstack:
+             min-ver: 2.45
+
 And what’s next?
 ----------------
 
@@ -279,7 +292,7 @@ Let's build OpenAPI specs from service sources
 
 - Inspect source code of services
 
-- Most services have json schema attached to the controllers
+- Some services have json schema attached to the controllers
 
 - Services use different frameworks (wsgi + routes, pecan, flask, etc)
 
@@ -291,10 +304,15 @@ CodeGenerator
 -------------
 
 - OpenAPI specs by inspecting source code of services
+
 - Rust SDK
+
 - Rust CLI
+
 - Python openstackclient
+
 - Ansible modules
+
 - …
 
 OpenStack supported services
@@ -367,7 +385,7 @@ Challenges
 
 - Unified behavior for non-standard service API functionality
 
-- JSON schema does not catch all of the schema errors
+- Used JSON schema libraries have limited validation of the schema errors
 
 - OpenAPI validation still does not catch all of the JSON schema errors
 
@@ -460,17 +478,19 @@ Rust tooling
 
 - Compiled binary
 
+- Unavoidable consistency (matching to the API functionality)
+
 - ...
 
 . . . 
 
 - Private project, `sponsoring <https://github.com/sponsors/gtema>`_ is
-  |smileyheart|
+  very |smileyheart|
 
 Next Steps
 ----------
 
--  Improve OpenStack pipeline of specs handling
+-  Improve OpenStack pipeline for handling specs
 -  Improve OpenStack services to add missing schema
 -  Continue extending generator targets (i.e. TUI, GopherCloud, OpenTofu)
 -  Central api gateway using OpenAPI specs
