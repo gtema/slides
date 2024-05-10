@@ -38,21 +38,53 @@ Version 3.1.0
 OpenAPI version 3.1.0, released in 2021, includes JSON schema alignment what
 allows it to be applied for every API with JSON schema.
 
+OpenAPI Example
+---------------
+
+.. code:: yaml
+
+   openapi: 3.1.0
+   info:
+     version: 1.0.0
+     title: Sample API
+     description: A sample API to illustrate OpenAPI concepts
+   paths:
+     /list:
+       get:
+         description: Returns a list of stuff
+         request:
+           headers:
+             ..
+           content:
+             ..
+         responses:
+           '200':
+             headers:
+               ..
+             content:
+               application/json:
+                 schema:
+                   description: Stuff items list
+                   type: array
+                   items:
+                     type: string
+                     description: I am the stuff item
+
 What is OpenAPI good for
 ------------------------
 
--  Machine readable API contract
--  API documentation consistent with the service code
--  Generation of API clients
--  Enables API security testing
--  Ease API integration into 3rd party frameworks (i.e. API Gateway)
+- Machine readable API contract
+- API documentation consistent with the service code
+- Generation of API clients
+- Enables API security testing
+- Ease API integration into 3rd party frameworks (i.e. API Gateway)
 
 OpenStack API
 -------------
 
--  Every service is exposing their own individual API
--  Strongly deviating despite API-SIG effort
--  Non-declarative
+- Every service is exposing their own individual API
+- Strongly deviating despite API-SIG effort
+- Non-declarative
 
 . . .
 
@@ -242,8 +274,8 @@ Constraints
 And what’s next?
 ----------------
 
-Building OpenAPI specs from service sources
--------------------------------------------
+Let's build OpenAPI specs from service sources
+----------------------------------------------
 
 - Inspect source code of services
 
@@ -253,17 +285,17 @@ Building OpenAPI specs from service sources
 
 - Response descriptions mostly missing
 
-==> `CodeGenerator <https://opendev.org/openstack/codegenerator>`__
+  ==> `CodeGenerator <https://opendev.org/openstack/codegenerator>`__
 
 CodeGenerator
 -------------
 
--  OpenAPI specs by inspecting services
--  Rust SDK
--  Rust CLI
--  Python openstackclient
--  Ansible modules
--  …
+- OpenAPI specs by inspecting source code of services
+- Rust SDK
+- Rust CLI
+- Python openstackclient
+- Ansible modules
+- …
 
 OpenStack supported services
 ----------------------------
@@ -340,6 +372,13 @@ Challenges
 - OpenAPI validation still does not catch all of the JSON schema errors
 
   => CodeGeneration catches lot of schema errors
+
+.. code:: json
+
+   "type": "object",
+   "properties": {
+     "schema_version": {"name": {"type": "string"}}
+   }
 
 Rust Tooling 🦀💖
 -----------------
@@ -441,7 +480,7 @@ Next Steps
    -  throttling, Anti-DDoS, etc
 
 -  Security scanning of the APIs
--  Replace OpenStack API-Ref
+-  Replace OpenStack API-Ref (documentation)
 
 Thank you
 ---------
