@@ -1,4 +1,4 @@
-SUBDIRS := stackmon
+SUBDIRS := stackmon openstack_openapi
 
 .PHONY: subdirs $(SUBDIRS)
 
