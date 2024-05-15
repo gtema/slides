@@ -794,7 +794,7 @@ margin-left: 1em;
 <li>OpenStack API &quot;features&quot;</li>
 <li>Designing OpenAPI for OpenStack</li>
 <li>CodeGenerator</li>
-<li>Rust Tooling 🦀</li>
+<li>How OpenAPI specs can be used 🦀</li>
 </ul>
 </section>
 <section id="what-is-openapi" class="slide level1">
@@ -849,17 +849,24 @@ schema.</p>
 <li>Ease API integration into 3rd party frameworks (i.e. API
 Gateway)</li>
 </ul>
+<div class="fragment">
+<ul>
+<li><strong>Open</strong> <em>your</em> <strong>API</strong> (make it
+consumable)</li>
+</ul>
+</div>
 </section>
 <section id="openstack-api" class="slide level1">
 <h1>OpenStack API</h1>
 <ul>
-<li>Every service is exposing their own individual API</li>
-<li>Strongly deviating despite API-SIG effort</li>
-<li>Non-declarative</li>
+<li>Every service is exposing their <strong>own individual</strong>
+API</li>
+<li><strong>Strongly deviating</strong> despite API-SIG effort</li>
+<li><strong>Non-declarative</strong></li>
 </ul>
 <div class="fragment">
 <ul>
-<li>Not directly OpenAPI compatible</li>
+<li><strong>Not directly OpenAPI compatible</strong></li>
 </ul>
 </div>
 </section>
@@ -1039,7 +1046,7 @@ constraints</li>
 <li><p>Some services have json schema attached to the
 controllers</p></li>
 <li><p>Services use different frameworks (wsgi + routes, pecan, flask,
-etc)</p></li>
+WSME, etc)</p></li>
 <li><p>Response descriptions mostly missing</p>
 <p>==&gt; <a href="https://opendev.org/openstack/codegenerator">CodeGenerator</a></p></li>
 </ul>
@@ -1129,28 +1136,69 @@ etc)</p></li>
 <h1>Challenges</h1>
 <ul>
 <li><p>No naming conventions</p></li>
-<li><p>Unified behavior for non-standard service API
-functionality</p></li>
-<li><p>Used JSON schema libraries have limited validation of the schema
+<li><p>Unified behavior for non-standard service functionality is
+hard</p></li>
+<li><p>Used JSON schema libraries have <strong>limited</strong>
+validation of the schema errors</p></li>
+<li><p>OpenAPI validation still <strong>does not</strong> catch all of
+the JSON schema errors</p>
+<p>=&gt; CodeGeneration catches <strong>lot</strong> of schema
 errors</p></li>
-<li><p>OpenAPI validation still does not catch all of the JSON schema
-errors</p>
-<p>=&gt; CodeGeneration catches lot of schema errors</p></li>
 </ul>
 <div class="sourceCode" id="cb11"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="er">&quot;type&quot;:</span> <span class="er">&quot;object&quot;,</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="er">&quot;properties&quot;:</span> <span class="fu">{</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;schema_version&quot;</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;string&quot;</span><span class="fu">}}</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 </section>
+<section id="small-survey" class="slide level1">
+<h1>Small Survey</h1>
+<p>Who:</p>
+<div class="fragment">
+<ul>
+<li>Uses python-openstackclient</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Isn&#39;t satisfied with its performance?</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>having issues with API and client doing things differently</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>likes/doesn&#39;t an attempt to normalize OpenStack services</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>wants a small binary cli to skip dependency hell</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>frustrated with malfunctioning automation and missing bypass
+capabilities</li>
+</ul>
+</div>
+</section>
 <section id="rust-tooling" class="slide level1">
 <h1>Rust Tooling 🦀💖</h1>
 <p><a href="https://github.com/gtema/openstack">https://github.com/gtema/openstack</a></p>
+<div class="fragment">
 <ul>
 <li>SDK
 <ul>
 <li>sync</li>
 <li>async</li>
 </ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
 <li>CLI</li>
 </ul>
 <pre class="console"><code>$&gt; osc --os-cloud devstack compute server list
@@ -1165,63 +1213,73 @@ errors</p>
 | b62f9988-***-*** | 3**** | ACTIVE  |
 | 1b129bad-***-*** | s**** | SHUTOFF |
 +------------------+-------+---------+</code></pre>
+</div>
+</section>
+<section id="benchmark" class="slide level1">
+<h1>Benchmark</h1>
+<ul>
+<li>Scalability</li>
+<li>Sustainability</li>
+<li>Efficiency</li>
+</ul>
 </section>
 <section class="slide level1">
 
-<h3 id="benchmark">Benchmark</h3>
 <table>
+<thead>
+<tr class="header">
+<th>Test</th>
+<th>OSC (python)</th>
+<th>OSC (Rust)</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td>Test</td>
-<td>python-openstackclient</td>
-<td>OSC (Rust)</td>
-</tr>
-<tr class="even">
 <td><span class="title-ref">catalog list</span></td>
 <td>1.54s</td>
 <td>68ms</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span class="title-ref">flavor list</span></td>
 <td>2.6s</td>
 <td>830ms</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span class="title-ref">server list</span> (empty)</td>
 <td>1.8s</td>
 <td>210ms</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span class="title-ref">server list</span> (10 entries)</td>
 <td>4.0s</td>
 <td>709ms</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span class="title-ref">image list</span></td>
 <td>2.4s</td>
 <td>560ms</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span class="title-ref">network list</span></td>
 <td>1.8s</td>
 <td>330ms</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span class="title-ref">volume list</span></td>
 <td>1.9s</td>
 <td>270ms</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span class="title-ref">container list</span></td>
 <td>1.3s</td>
 <td>370ms</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><span class="title-ref">object list</span> (3200 files)</td>
 <td>2.4s</td>
 <td>1.0s</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span class="title-ref">object list</span> (10000 files)</td>
 <td>3.8s</td>
 <td>1.7s</td>
@@ -1270,6 +1328,9 @@ OpenTofu)</li>
 <li><a href="https://github.com/gtema/openstack">https://github.com/gtema/openstack</a></li>
 <li><a href="https://gtema.github.io/openstack-openapi/">https://gtema.github.io/openstack-openapi/</a></li>
 </ul>
+</section>
+<section id="qa" class="slide level1">
+<h1>Q&amp;A</h1>
 </section>
     </div>
   </div>

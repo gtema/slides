@@ -20,7 +20,7 @@ Agenda
 
 - CodeGenerator
 
-- Rust Tooling |crab|
+- How OpenAPI specs can be used |crab|
 
 
 What is OpenAPI
@@ -79,16 +79,20 @@ What is OpenAPI good for
 - Enables API security testing
 - Ease API integration into 3rd party frameworks (i.e. API Gateway)
 
+. . .
+
+- **Open** *your* **API** (make it consumable)
+
 OpenStack API
 -------------
 
-- Every service is exposing their own individual API
-- Strongly deviating despite API-SIG effort
-- Non-declarative
+- Every service is exposing their **own individual** API
+- **Strongly deviating** despite API-SIG effort
+- **Non-declarative**
 
 . . .
 
--  Not directly OpenAPI compatible
+- **Not directly OpenAPI compatible**
 
 Dynamic headers
 ---------------
@@ -294,7 +298,7 @@ Let's build OpenAPI specs from service sources
 
 - Some services have json schema attached to the controllers
 
-- Services use different frameworks (wsgi + routes, pecan, flask, etc)
+- Services use different frameworks (wsgi + routes, pecan, flask, WSME, etc)
 
 - Response descriptions mostly missing
 
@@ -383,13 +387,13 @@ Challenges
 
 - No naming conventions
 
-- Unified behavior for non-standard service API functionality
+- Unified behavior for non-standard service functionality is hard
 
-- Used JSON schema libraries have limited validation of the schema errors
+- Used JSON schema libraries have **limited** validation of the schema errors
 
-- OpenAPI validation still does not catch all of the JSON schema errors
+- OpenAPI validation still **does not** catch all of the JSON schema errors
 
-  => CodeGeneration catches lot of schema errors
+  => CodeGeneration catches **lot** of schema errors
 
 .. code:: json
 
@@ -398,16 +402,50 @@ Challenges
      "schema_version": {"name": {"type": "string"}}
    }
 
+Small Survey
+------------
+
+Who:
+
+. . .
+
+- Uses python-openstackclient
+
+. . .
+
+- Isn't satisfied with its performance?
+
+. . .
+
+- having issues with API and client doing things differently
+
+. . .
+
+- likes/doesn't an attempt to normalize OpenStack services
+
+. . .
+
+- wants a small binary cli to skip dependency hell
+
+. . .
+
+- frustrated with malfunctioning automation and missing bypass capabilities
+
+
 Rust Tooling 🦀💖
 -----------------
 
 `https://github.com/gtema/openstack<https://github.com/gtema/openstack>`_
+
+. . .
 
 - SDK
 
   - sync
 
   - async
+
+. . .
 
 - CLI
 
@@ -426,15 +464,23 @@ Rust Tooling 🦀💖
    | 1b129bad-***-*** | s**** | SHUTOFF |
    +------------------+-------+---------+
    
-------
 
 Benchmark
-^^^^^^^^^
+---------
+
+- Scalability
+
+- Sustainability
+
+- Efficiency
+
+------
 
 .. list-table::
+   :header-rows: 1
 
    * - Test
-     - python-openstackclient
+     - OSC (python)
      - OSC (Rust)
    * - `catalog list` 
      - 1.54s 
@@ -513,6 +559,10 @@ Links:
 - `https://github.com/gtema/openstack <https://github.com/gtema/openstack>`_
 
 - `https://gtema.github.io/openstack-openapi/ <https://gtema.github.io/openstack-openapi/>`_
+
+
+Q&A
+---
 
 
 .. |plusmn| unicode:: U+2757 .. PLUS-MINUS SIGN
