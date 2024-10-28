@@ -37,7 +37,7 @@ Why new CLI
 
 - 183,000 loc openstacksdk
 
-- code created by reading api documentation
+- code created by humans reading api documentation and reimplementing functionalty
 
 - slow (approx 1s start delay caused by python and plugins loading)
 
@@ -46,16 +46,20 @@ Why new CLI
 Can the current OSC be improved?
 --------------------------------
 
+. . .
+
 Well, no
 
 - certain aspects can be improved
 
-- huge code base required costly maintenance
+- huge code base requires costly maintenance
 
 - any improvement (change) breaks backwards compatibility making users "angry"
 
 How to do it better
 -------------------
+
+- use compilable language
 
 - generate clients (sdk, cli, etc) for desired programming languages
 
@@ -72,17 +76,19 @@ Documentation
 Installation
 ------------
 
+`github.com/gtema/openstack <https://github.com/gtema/openstack>`_
+
 - as binaries from GitHub
 
 .. code:: console
 
-  curl --proto '=https' --tlsv1.2 -LsSf https://github.com/gtema/openstack/releases/download/openstack_cli-v0.8.1/openstack_cli-installer.sh | sh
+  curl --proto '=https' --tlsv1.2 -LsSf https://github.com/gtema/openstack/releases/download/openstack_cli-v0.8.2/openstack_cli-installer.sh | sh
 
 - Container 
 
 .. code:: console
 
-   docker pull ghcr.io/gtema/openstack:0.8.1
+   docker pull ghcr.io/gtema/openstack:0.8.2
 
 - Build locally
 
@@ -95,19 +101,42 @@ Command syntax
 
 .. code:: console
 
-   osc <service> <resource> <subresource> [--parameters]
+   osc <service> <resource> <subresource> [--parameters] <operation>
 
    osc <service> help
+
+- similar style as of python-openstackclient
+
+- `service` is present always (no `osc group list`)
+
+- multi-word resources are always dash-separated (i.e. `application-credential`, `security-group`)
 
 Auth
 ----
 
-- `osc auth login`
+- ``osc auth show``
 
-- `osc auth show`
+- ``osc --os-cloud devstack auth show``
 
-- `osc --os-cloud XXX auth show`
+- ``osc auth login``
 
+Extended auth
+-------------
+
+.. list-table::
+   :header-rows: 1
+
+   * - Command
+     - Description
+   * - ``osc ...`` 
+     - Use $OS_CLOUD env or prompt user
+   * - ``osc ... --os-cloud``
+     - Request explicit cloud from `clouds.yaml`
+   * - ``osc ... --os-cloud --os-project-name``
+     - Override project scope keeping identity info
+   * - ``osc ... --os-client-config-file``
+     - Alternative path to `clouds.yaml`
+  
 
 Output format
 -------------
@@ -133,15 +162,32 @@ Curl mode
 
    osc api identity auth/projects --pretty
 
+Auth caching
+------------
+
+`Documentation <https://gtema.github.io/openstack/auth.html#caching>`_
+
+.. code:: console
+
+   ls ~/.osc
+
+- Auth/authz is stored on FS
+
+- Single file caches all `authz` of single `auth`
+
+- Keyring support will be added in future
+
 
 TUI
 ---
+
+- Inspired by k9s
 
 - Installation
 
 .. code:: console
 
-   curl --proto '=https' --tlsv1.2 -LsSf https://github.com/gtema/openstack/releases/download/openstack_tui-v0.1.5/openstack_tui-installer.sh | sh
+   curl --proto '=https' --tlsv1.2 -LsSf https://github.com/gtema/openstack/releases/download/openstack_tui-v0.1.6/openstack_tui-installer.sh | sh
 
 
 - Running
@@ -151,3 +197,21 @@ TUI
    ostui
 
    ostui --os-cloud XXX
+
+Shortcuts
+---------
+
+.. list-table:: Shortcuts
+
+   * - Shortcut
+     - Description
+   * - `<:>`
+     - Switch to the resource
+   * - `<F2>`
+     - Switch cloud
+   * - `<F4>`
+     - Switch project (authz)
+   * - <↑> | <↓> | <PageUp> | <PageDown> | <Home> | <End>
+     - Navigate or scroll
+   * - <↹>
+     - Switch panes
