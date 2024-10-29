@@ -178,6 +178,34 @@ Auth caching
 - Keyring support will be added in future
 
 
+Image tutorial
+--------------
+
+- wget https://github.com/cirros-dev/cirros/releases/download/0.6.3/cirros-0.6.3-x86_64-disk.img
+- qemu-img info cirros-0.6.3-x86_64-disk.img
+- osc image image create --container-format bare --disk-format qcow2 --name test-cirros --min-disk 1 --min-ram 64
+- osc image image show test-cirros
+- osc image image upload 113d89a9-5847-4b87-97f5-52c466dc9109 --file cirros-0.6.3-x86_64-disk.img
+- osc image image set 113d89a9-5847-4b87-97f5-52c466dc9109 --property foo=bar
+- osc image image set 113d89a9-5847-4b87-97f5-52c466dc9109 --property bar=baz -o json --pretty
+- osc image image download 113d89a9-5847-4b87-97f5-52c466dc9109 --file test-cirros.qcow2
+- osc image image delete 113d89a9-5847-4b87-97f5-52c466dc9109
+
+Swift tutorial
+--------------
+
+- osc object-store container list
+- osc object-store container create test
+- osc object-store object upload --file cirros-0.6.3-x86_64-disk.img test my-cirros-image
+- echo "dummy" | osc object-store object upload test some-other-data
+- osc object-store object download test some-other-data
+- osc object-store object list test
+- osc object-store object list test -o wide
+- osc object-store container prune test --prefix some
+- osc object-store container delete test
+- osc object-store container prune test
+- osc object-store container delete test
+
 TUI
 ---
 
