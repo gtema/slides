@@ -1,4 +1,4 @@
-SUBDIRS := stackmon openstack_openapi rust_cli
+SUBDIRS := stackmon openstack_openapi rust_cli rust_keystone
 
 .PHONY: subdirs $(SUBDIRS)
 
