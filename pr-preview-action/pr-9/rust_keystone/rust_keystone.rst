@@ -26,8 +26,6 @@ Agenda
 What I was working on
 ---------------------
 
-`Blog post <https://gtema.github.io/posts/rethinking-openstack-auth-authz/>`_
-
 - OpenStack users (CSP customers) are not having possibility to establish user
   federation (ldap, oidc) or similar without involving administrators.
 
@@ -111,7 +109,7 @@ Performance
        result = benchmark(lambda: fernet.validate_token(token))
        assert result
 
-   token = "gAAAAABnuDa_xLN1n9DrJyv-uDfODPvksisW9zUMirxT3vtyqwSNRQCoNLL2sOMiCCeE5ov6YdeZInzweIo0RObSVt0tma4qoQKHZr03pxYBi_drdvs2NWpxiwxyJDwdW8wsRo3Hmke-FNpG3Chq56WhW3mPQiTFPCNDg7anrYZN3sRxRd4ijuU"
+   token = "gAAAAABnuDa_xLN1n9DrJyv-uDfOD...."
 
 
 .. code:: console
@@ -143,7 +141,30 @@ Performance
 
 Mac numbers can not be compared with Linux
 
-- list users
+
+. . .
+
+
+Get Users (Python)
+------------------
+
+.. image:: get_users_py.png
+
+Get Users (Rust)
+------------------
+
+.. image:: get_users_rust.png
+
+Get Users (Python, 32 cores)
+----------------------------
+
+.. image:: get_users_py_server.png
+
+Get Users (Rust, 32 cores)
+--------------------------
+
+.. image:: get_users_rust_server.png
+
 
 Passkey (SecurityKey) auth Demo
 -------------------------------
