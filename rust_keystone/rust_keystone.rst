@@ -20,14 +20,16 @@ Agenda
 
 - Performance
 
+- Demo 
+
 - Way forward
 
 
 What I was working on
 ---------------------
 
-- OpenStack users (CSP customers) are not having possibility to establish user
-  federation (ldap, oidc) or similar without involving administrators.
+- Let OpenStack users (CSP customers) establish user federation (ldap, oidc) or
+  similar without involving administrators.
 
 - Federation using oidc is managed outside of Keystone itself (typically by
   mod_auth_oidc module) what limits integration capabilities.
@@ -37,16 +39,14 @@ What I was working on
 
 - Modification of oidc federation requires restart of Keystone.
 
-- Lack of SCIM support
+- Lack of SCIM (System for Cross-domain Identity Management) support
 
-- Lack of an easy possibility to easily exchange JWT for an OpenStack token.
+- Exchange JWT for an OpenStack token
 
-- Lack of fine-granular access control. Adding a new role dramatically
-  complicates policy management.
+- Lack of fine-granular access control (role explosion)
 
-- Lack of possibility to integrate external authorization systems. This is
-  often necessary when OpenStack is just one offering in the service portfolio
-  of the CSP.
+- Integrate external authorization systems. This is often necessary when
+  OpenStack is just one offering in the service portfolio of the CSP.
 
 - Lack of service accounts concept.
 
@@ -80,10 +80,26 @@ Keystone library for Rust
 - Fernet (decrypt/encrypt), msgpack (encode/decode)
 
 
+Adding API to the lib
+---------------------
+
+Technically just peanuts compared to the lib itself
+
+- token validation
+
+- policy (not done yet)
+
+- convert API request into the backend structure
+
+- invoke backend method
+
+- convert backend response to the API response
+
+
 Performance 
 -----------
 
-- password hashing is slow, on purpuse
+- password hashing is slow, on purpose
 
 - decrypt token
 
@@ -117,19 +133,21 @@ Python
 
 .. code:: console
 
-   Mac
-   ------------------------------------------ benchmark 'group-name': 1 tests ------------------------------
-   Name (time in us)         Min       Max     Mean  StdDev   Median     IQR  Outliers  OPS (Kops/s)  Rounds
-   ---------------------------------------------------------------------------------------------------------
-   test_fast             71.7640  124.9313  77.4613  3.8331  77.9629  4.7684    165;14       12.9097     685
-   ---------------------------------------------------------------------------------------------------------
-
    Linux
+   =====
    -------------------------------------------- benchmark 'group-name': 1 tests ---------------------------------
    Name (time in us)          Min       Max      Mean   StdDev    Median      IQR  Outliers  OPS (Kops/s)  Rounds
    --------------------------------------------------------------------------------------------------------------
    test_fast             206.4705  315.6662  218.3426  11.8152  215.5304  11.6825     52;21        4.5800     498
    --------------------------------------------------------------------------------------------------------------
+
+   Mac
+   ===
+   ------------------------------------------ benchmark 'group-name': 1 tests ------------------------------
+   Name (time in us)         Min       Max     Mean  StdDev   Median     IQR  Outliers  OPS (Kops/s)  Rounds
+   ---------------------------------------------------------------------------------------------------------
+   test_fast             71.7640  124.9313  77.4613  3.8331  77.9629  4.7684    165;14       12.9097     685
+   ---------------------------------------------------------------------------------------------------------
 
 
 Rust
@@ -179,29 +197,32 @@ Overall sample performance improvement
 
 .. code-block:: console
 
-   ░▒▓   …/python-openstackclient   master    v3.12.9 (py312)   15:30 
-   ❯ /usr/bin/time -h openstack --os-cloud dev-keystone user list > /dev/null
-   	0.79s real		0.28s user		0.07s sys
-   
-   ░▒▓   …/python-openstackclient   master    v3.12.9 (py312)   15:30 
-   ❯ /usr/bin/time -h osc --os-cloud dev-keystone identity user list > /dev/null
-   	0.21s real		0.00s user		0.02s sys
-   
-   ░▒▓   …/python-openstackclient   master    v3.12.9 (py312)   15:30 
-   ❯ /usr/bin/time -h osc --os-cloud dev-keystone-rust identity user list > /dev/null
-   	0.03s real		0.01s user		0.00s sys
+   ❯ hyperfine 'openstack --os-cloud dev-keystone user list'
+   Benchmark 1: openstack --os-cloud dev-keystone user list
+     Time (mean ± σ):     622.5 ms ±  64.5 ms    [User: 269.4 ms, System: 41.5 ms]
+     Range (min … max):   591.5 ms … 800.8 ms    10 runs
+
+   ❯ hyperfine 'osc --os-cloud dev-keystone identity user list'
+   Benchmark 1: osc --os-cloud dev-keystone identity user list
+     Time (mean ± σ):     107.6 ms ±  84.8 ms    [User: 6.0 ms, System: 3.3 ms]
+     Range (min … max):    78.8 ms … 348.8 ms    10 runs
+
+   ❯ hyperfine 'osc --os-cloud dev-keystone-rust identity user list'
+   Benchmark 1: osc --os-cloud dev-keystone-rust identity user list
+     Time (mean ± σ):      15.0 ms ±   1.5 ms    [User: 5.6 ms, System: 2.8 ms]
+     Range (min … max):    12.6 ms …  27.1 ms    123 runs
 
 
-Passkey (SecurityKey) auth Demo
--------------------------------
+Demo time
+---------
 
-Disclaimer: 
+Disclaimer:
 
 - Passkey != SecurityKey
 
 - Passkey != Passkey (Apple != Android != Windows)
 
-- WebAuthN - lib maintainers admit pink glasses off
+- WebAuthN - `libs maintainers deilusionated <https://fy.blackhats.net.au/blog/2024-04-26-passkeys-a-shattered-dream/>`_
 
 
 ====
@@ -212,7 +233,7 @@ Disclaimer:
 Roadmap
 -------
 
-- Make KeystoneNG additional deployment component (to be tightly intergrated
+- Make KeystoneNG additional deployment component (to be tightly integrated
   with Rust OSC)
 
 - take care of advanced auth:
@@ -228,3 +249,5 @@ Roadmap
 - overtake Auth and token validation
 
 - continuous closing of the functional gaps to Keystone
+
+- `GitHub Repository https://github.com/gtema/keystone <https://github.com/gtema/keystone>`_
