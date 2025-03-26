@@ -911,17 +911,20 @@ fernet token/project    time:   [3.1311 µs 3.1386 µs 3.1465 µs]</code></pre>
 </section>
 <section id="overall-sample-performance-improvement" class="slide level1">
 <h1>Overall sample performance improvement</h1>
-<pre class="console"><code>░▒▓ …/python-openstackclient master v3.12.9 (py312) 15:30
-❯ /usr/bin/time -h openstack --os-cloud dev-keystone user list &gt; /dev/null
- 0.79s real      0.28s user      0.07s sys
+<pre class="console"><code>❯ hyperfine &#39;openstack --os-cloud dev-keystone user list&#39;
+Benchmark 1: openstack --os-cloud dev-keystone user list
+  Time (mean ± σ):     622.5 ms ±  64.5 ms    [User: 269.4 ms, System: 41.5 ms]
+  Range (min … max):   591.5 ms … 800.8 ms    10 runs
 
-░▒▓ …/python-openstackclient master v3.12.9 (py312) 15:30
-❯ /usr/bin/time -h osc --os-cloud dev-keystone identity user list &gt; /dev/null
- 0.21s real      0.00s user      0.02s sys
+❯ hyperfine &#39;osc --os-cloud dev-keystone identity user list&#39;
+Benchmark 1: osc --os-cloud dev-keystone identity user list
+  Time (mean ± σ):     107.6 ms ±  84.8 ms    [User: 6.0 ms, System: 3.3 ms]
+  Range (min … max):    78.8 ms … 348.8 ms    10 runs
 
-░▒▓ …/python-openstackclient master v3.12.9 (py312) 15:30
-❯ /usr/bin/time -h osc --os-cloud dev-keystone-rust identity user list &gt; /dev/null
- 0.03s real      0.01s user      0.00s sys</code></pre>
+❯ hyperfine &#39;osc --os-cloud dev-keystone-rust identity user list&#39;
+Benchmark 1: osc --os-cloud dev-keystone-rust identity user list
+  Time (mean ± σ):      15.0 ms ±   1.5 ms    [User: 5.6 ms, System: 2.8 ms]
+  Range (min … max):    12.6 ms …  27.1 ms    123 runs</code></pre>
 </section>
 <section id="passkey-securitykey-auth-demo" class="slide level1">
 <h1>Passkey (SecurityKey) auth Demo</h1>

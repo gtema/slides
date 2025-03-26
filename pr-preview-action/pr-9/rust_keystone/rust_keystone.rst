@@ -179,17 +179,20 @@ Overall sample performance improvement
 
 .. code-block:: console
 
-   ░▒▓ …/python-openstackclient master v3.12.9 (py312) 15:30
-   ❯ /usr/bin/time -h openstack --os-cloud dev-keystone user list > /dev/null
-   	0.79s real		0.28s user		0.07s sys
+   ❯ hyperfine 'openstack --os-cloud dev-keystone user list'
+   Benchmark 1: openstack --os-cloud dev-keystone user list
+     Time (mean ± σ):     622.5 ms ±  64.5 ms    [User: 269.4 ms, System: 41.5 ms]
+     Range (min … max):   591.5 ms … 800.8 ms    10 runs
 
-   ░▒▓ …/python-openstackclient master v3.12.9 (py312) 15:30
-   ❯ /usr/bin/time -h osc --os-cloud dev-keystone identity user list > /dev/null
-   	0.21s real		0.00s user		0.02s sys
+   ❯ hyperfine 'osc --os-cloud dev-keystone identity user list'
+   Benchmark 1: osc --os-cloud dev-keystone identity user list
+     Time (mean ± σ):     107.6 ms ±  84.8 ms    [User: 6.0 ms, System: 3.3 ms]
+     Range (min … max):    78.8 ms … 348.8 ms    10 runs
 
-   ░▒▓ …/python-openstackclient master v3.12.9 (py312) 15:30
-   ❯ /usr/bin/time -h osc --os-cloud dev-keystone-rust identity user list > /dev/null
-   	0.03s real		0.01s user		0.00s sys
+   ❯ hyperfine 'osc --os-cloud dev-keystone-rust identity user list'
+   Benchmark 1: osc --os-cloud dev-keystone-rust identity user list
+     Time (mean ± σ):      15.0 ms ±   1.5 ms    [User: 5.6 ms, System: 2.8 ms]
+     Range (min … max):    12.6 ms …  27.1 ms    123 runs
 
 
 Passkey (SecurityKey) auth Demo
