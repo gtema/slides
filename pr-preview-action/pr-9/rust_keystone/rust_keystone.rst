@@ -179,15 +179,15 @@ Overall sample performance improvement
 
 .. code-block:: console
 
-   ░▒▓   …/python-openstackclient   master    v3.12.9 (py312)   15:30 
+   ░▒▓ …/python-openstackclient master v3.12.9 (py312) 15:30
    ❯ /usr/bin/time -h openstack --os-cloud dev-keystone user list > /dev/null
    	0.79s real		0.28s user		0.07s sys
-   
-   ░▒▓   …/python-openstackclient   master    v3.12.9 (py312)   15:30 
+
+   ░▒▓ …/python-openstackclient master v3.12.9 (py312) 15:30
    ❯ /usr/bin/time -h osc --os-cloud dev-keystone identity user list > /dev/null
    	0.21s real		0.00s user		0.02s sys
-   
-   ░▒▓   …/python-openstackclient   master    v3.12.9 (py312)   15:30 
+
+   ░▒▓ …/python-openstackclient master v3.12.9 (py312) 15:30
    ❯ /usr/bin/time -h osc --os-cloud dev-keystone-rust identity user list > /dev/null
    	0.03s real		0.01s user		0.00s sys
 
