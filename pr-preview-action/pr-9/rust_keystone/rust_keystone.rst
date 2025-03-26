@@ -111,6 +111,9 @@ Performance
 
    token = "gAAAAABnuDa_xLN1n9DrJyv-uDfOD...."
 
+====
+
+Python
 
 .. code:: console
 
@@ -129,6 +132,8 @@ Performance
    --------------------------------------------------------------------------------------------------------------
 
 
+Rust
+
 .. code:: console
 
    Linux
@@ -139,31 +144,52 @@ Performance
    ===
    fernet token/project    time:   [3.1311 µs 3.1386 µs 3.1465 µs]
 
-Mac numbers can not be compared with Linux
-
-
-. . .
+Note: Mac numbers can not be compared with Linux
 
 
 Get Users (Python)
 ------------------
 
 .. image:: get_users_py.png
+   :height: 600px
+
 
 Get Users (Rust)
 ------------------
 
 .. image:: get_users_rust.png
+   :height: 600px
 
 Get Users (Python, 32 cores)
 ----------------------------
 
 .. image:: get_users_py_server.png
+   :height: 600px
 
 Get Users (Rust, 32 cores)
 --------------------------
 
 .. image:: get_users_rust_server.png
+   :height: 600px
+
+
+Overall sample performance improvement
+--------------------------------------
+
+
+.. code-block:: console
+
+   ░▒▓   …/python-openstackclient   master    v3.12.9 (py312)   15:30 
+   ❯ /usr/bin/time -h openstack --os-cloud dev-keystone user list > /dev/null
+   	0.79s real		0.28s user		0.07s sys
+   
+   ░▒▓   …/python-openstackclient   master    v3.12.9 (py312)   15:30 
+   ❯ /usr/bin/time -h osc --os-cloud dev-keystone identity user list > /dev/null
+   	0.21s real		0.00s user		0.02s sys
+   
+   ░▒▓   …/python-openstackclient   master    v3.12.9 (py312)   15:30 
+   ❯ /usr/bin/time -h osc --os-cloud dev-keystone-rust identity user list > /dev/null
+   	0.03s real		0.01s user		0.00s sys
 
 
 Passkey (SecurityKey) auth Demo
@@ -177,3 +203,28 @@ Disclaimer:
 
 - WebAuthN - lib maintainers admit pink glasses off
 
+
+====
+
+.. image:: webauthn_auth.svg
+   :height: 500px
+
+Roadmap
+-------
+
+- Make KeystoneNG additional deployment component (to be tightly intergrated
+  with Rust OSC)
+
+- take care of advanced auth:
+
+  - customer managed IdP 
+
+  - Scim
+
+  - JWT auth (i.e. GitHub workflow)
+
+  - security key
+
+- overtake Auth and token validation
+
+- continuous closing of the functional gaps to Keystone
