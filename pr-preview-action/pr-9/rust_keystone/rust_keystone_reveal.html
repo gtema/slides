@@ -797,9 +797,8 @@ margin-left: 1em;
 <section id="what-i-was-working-on" class="slide level1">
 <h1>What I was working on</h1>
 <ul>
-<li>OpenStack users (CSP customers) are not having possibility to
-establish user federation (ldap, oidc) or similar without involving
-administrators.</li>
+<li>Let OpenStack users (CSP customers) establish user federation (ldap,
+oidc) or similar without involving administrators.</li>
 <li>Federation using oidc is managed outside of Keystone itself
 (typically by mod_auth_oidc module) what limits integration
 capabilities.</li>
@@ -807,14 +806,13 @@ capabilities.</li>
 different customers while being themselves in a control of such
 integration.</li>
 <li>Modification of oidc federation requires restart of Keystone.</li>
-<li>Lack of SCIM support</li>
-<li>Lack of an easy possibility to easily exchange JWT for an OpenStack
-token.</li>
-<li>Lack of fine-granular access control. Adding a new role dramatically
-complicates policy management.</li>
-<li>Lack of possibility to integrate external authorization systems.
-This is often necessary when OpenStack is just one offering in the
-service portfolio of the CSP.</li>
+<li>Lack of SCIM (System for Cross-domain Identity Management)
+support</li>
+<li>Exchange JWT for an OpenStack token</li>
+<li>Lack of fine-granular access control (role explosion)</li>
+<li>Iintegrate external authorization systems. This is often necessary
+when OpenStack is just one offering in the service portfolio of the
+CSP.</li>
 <li>Lack of service accounts concept.</li>
 </ul>
 </section>
