@@ -20,6 +20,8 @@ Agenda
 
 - Performance
 
+- Demo 
+
 - Way forward
 
 
@@ -80,10 +82,26 @@ Keystone library for Rust
 - Fernet (decrypt/encrypt), msgpack (encode/decode)
 
 
+Adding API to the lib
+---------------------
+
+Technically just peanuts compared to the lib itself
+
+- token validation
+
+- policy (not done yet)
+
+- convert API request into the backend structure
+
+- invoke backend method
+
+- convert backend response to the API response
+
+
 Performance 
 -----------
 
-- password hashing is slow, on purpuse
+- password hashing is slow, on purpose
 
 - decrypt token
 
@@ -117,19 +135,21 @@ Python
 
 .. code:: console
 
-   Mac
-   ------------------------------------------ benchmark 'group-name': 1 tests ------------------------------
-   Name (time in us)         Min       Max     Mean  StdDev   Median     IQR  Outliers  OPS (Kops/s)  Rounds
-   ---------------------------------------------------------------------------------------------------------
-   test_fast             71.7640  124.9313  77.4613  3.8331  77.9629  4.7684    165;14       12.9097     685
-   ---------------------------------------------------------------------------------------------------------
-
    Linux
+   =====
    -------------------------------------------- benchmark 'group-name': 1 tests ---------------------------------
    Name (time in us)          Min       Max      Mean   StdDev    Median      IQR  Outliers  OPS (Kops/s)  Rounds
    --------------------------------------------------------------------------------------------------------------
    test_fast             206.4705  315.6662  218.3426  11.8152  215.5304  11.6825     52;21        4.5800     498
    --------------------------------------------------------------------------------------------------------------
+
+   Mac
+   ===
+   ------------------------------------------ benchmark 'group-name': 1 tests ------------------------------
+   Name (time in us)         Min       Max     Mean  StdDev   Median     IQR  Outliers  OPS (Kops/s)  Rounds
+   ---------------------------------------------------------------------------------------------------------
+   test_fast             71.7640  124.9313  77.4613  3.8331  77.9629  4.7684    165;14       12.9097     685
+   ---------------------------------------------------------------------------------------------------------
 
 
 Rust
@@ -195,16 +215,16 @@ Overall sample performance improvement
      Range (min … max):    12.6 ms …  27.1 ms    123 runs
 
 
-Passkey (SecurityKey) auth Demo
--------------------------------
+Demo time
+---------
 
-Disclaimer: 
+Disclaimer:
 
 - Passkey != SecurityKey
 
 - Passkey != Passkey (Apple != Android != Windows)
 
-- WebAuthN - lib maintainers admit pink glasses off
+- WebAuthN - `libs maintainers deilusionated <https://fy.blackhats.net.au/blog/2024-04-26-passkeys-a-shattered-dream/>`_
 
 
 ====
@@ -215,7 +235,7 @@ Disclaimer:
 Roadmap
 -------
 
-- Make KeystoneNG additional deployment component (to be tightly intergrated
+- Make KeystoneNG additional deployment component (to be tightly integrated
   with Rust OSC)
 
 - take care of advanced auth:
@@ -231,3 +251,5 @@ Roadmap
 - overtake Auth and token validation
 
 - continuous closing of the functional gaps to Keystone
+
+- `GitHub Repository <https://github.com/gtema/keystone>`_
