@@ -250,4 +250,4 @@ Roadmap
 
 - continuous closing of the functional gaps to Keystone
 
-- `GitHub Repository <https://github.com/gtema/keystone>`_
+- `GitHub Repository https://github.com/gtema/keystone <https://github.com/gtema/keystone>`_
