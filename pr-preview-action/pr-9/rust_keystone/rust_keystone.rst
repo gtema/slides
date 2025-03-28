@@ -45,7 +45,7 @@ What I was working on
 
 - Lack of fine-granular access control (role explosion)
 
-- Iintegrate external authorization systems. This is often necessary when
+- Integrate external authorization systems. This is often necessary when
   OpenStack is just one offering in the service portfolio of the CSP.
 
 - Lack of service accounts concept.
