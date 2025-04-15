@@ -15,6 +15,6 @@ DESCRIPTION := "Observation for OpenStack cloud status"
 #	marp $< -o $@ --title $(TITLE) --description $(DESCRIPTION) --allow-local-files --html --theme default
 
 %_reveal.html: %.rst $(IMAGE_OBJ)
-	pandoc -t revealjs -s $< -o $@ -V width:1200 -V height:800 -V theme:moon --css style.css --standalone --embed-resources
+	pandoc -t revealjs -s $< -o $@ -V width:1200 -V height:800 -V theme:moon --css style.css --standalone --embed-resources -V revealjs-url=https://unpkg.com/reveal.js@^5.2.0
 
 all: $(IMAGE_OBJS) $(SLIDES_OBJ)
