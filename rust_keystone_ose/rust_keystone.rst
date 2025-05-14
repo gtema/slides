@@ -263,13 +263,13 @@ Security Key auth
 -----------------
 
 .. image:: webauthn_auth.svg
-   :height: 800px
+   :height: 600px
 
 OIDC auth
 ---------
 
 .. image:: oidc.svg
-   :height: 800px
+   :height: 600px
 
 Roadmap
 -------
