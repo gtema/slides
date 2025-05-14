@@ -770,6 +770,16 @@ margin-left: !0px;
 .danger p {
 margin-left: 1em;
 }
+.warning {
+color: magenta;
+}
+.warning .title {
+font-weight: bold;
+margin-left: !0px;
+}
+.warning p {
+margin-left: 1em;
+}
 </style>
 </head>
 <body>
@@ -844,7 +854,12 @@ support</li>
 <li>system</li>
 </ul></li>
 </ul>
-<p>Keystone token is bound to a scope</p>
+<div class="warning">
+<div class="title">
+<p>Warning</p>
+</div>
+<p>Keystone token is bound to a requested scope</p>
+</div>
 </section>
 <section id="keystone-library-for-rust" class="slide level1">
 <h1>Keystone library for Rust</h1>

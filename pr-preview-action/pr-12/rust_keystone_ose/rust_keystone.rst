@@ -86,7 +86,9 @@ Authentication vs authorization
   - domain_id
   - system
 
-Keystone token is bound to a scope
+.. warning::
+
+   Keystone token is bound to a requested scope
 
 
 Keystone library for Rust
