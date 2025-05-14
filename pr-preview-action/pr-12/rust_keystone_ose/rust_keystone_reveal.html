@@ -788,9 +788,8 @@ Rust</p>
 <h1>Agenda</h1>
 <ul>
 <li>What I was working on</li>
-<li>Keystone library for Rust</li>
-<li>Adding API</li>
 <li>Auth in Keystone</li>
+<li>Extending Keystone using Rust</li>
 <li>Performance</li>
 <li>Way forward</li>
 </ul>
@@ -798,53 +797,16 @@ Rust</p>
 <section id="what-i-was-working-on" class="slide level1">
 <h1>What I was working on</h1>
 <ul>
-<li>Let OpenStack users (CSP customers) establish user federation (ldap,
-oidc) or similar without involving administrators.</li>
-<li>Federation using oidc is managed outside of Keystone itself
-(typically by mod_auth_oidc module) what limits integration
-capabilities.</li>
-<li>It is not trivially possible to reuse single external IdP by
-different customers while being themselves in a control of such
-integration.</li>
-<li>Modification of oidc federation requires restart of Keystone.</li>
+<li>Allow users manage their Identity federation (ldap, oidc)</li>
+<li>Federation in Keystone is managed by proxy software (typically by
+mod_auth_oidc module or mod_shibboleth)</li>
+<li>Modification of federation requires restart of Keystone.</li>
 <li>Lack of SCIM (System for Cross-domain Identity Management)
 support</li>
 <li>Exchange JWT for an OpenStack token</li>
 <li>Lack of fine-granular access control (role explosion)</li>
-<li>Integrate external authorization systems. This is often necessary
-when OpenStack is just one offering in the service portfolio of the
-CSP.</li>
+<li>Integrate external authorization systems.</li>
 <li>Lack of service accounts concept.</li>
-</ul>
-</section>
-<section id="keystone-library-for-rust" class="slide level1">
-<h1>Keystone library for Rust</h1>
-<ul>
-<li>AuthN/Z are complex</li>
-<li>Python libs for OIDC/Scim are rare and often unmaintained</li>
-<li>A standalone component (Keystone extension) addressing Federation
-issues (like federation authentication)</li>
-<li>SDK/CLI/TUI for OpenStack in Rust already exists and is useful (i.e.
-proxy to Keystone)</li>
-<li>Library for Keystone is necessary
-<ul>
-<li>issuing a token touches nearly every angle of Keystone: user,
-project, domain, role, assignments, Fernet, etc</li>
-<li>direct access to the database is unavoidable</li>
-</ul></li>
-<li>Fernet (decrypt/encrypt), msgpack (encode/decode)</li>
-</ul>
-</section>
-<section id="adding-api-to-the-lib" class="slide level1">
-<h1>Adding API to the lib</h1>
-<p>Technically just peanuts compared to the lib itself</p>
-<ul>
-<li>token validation</li>
-<li>policy (not done yet)</li>
-<li>convert API request into the backend structure</li>
-<li>invoke backend method</li>
-<li>convert backend response to the API response</li>
-<li>oidc auth is not trivial though</li>
 </ul>
 </section>
 <section id="api-authentication" class="slide level1">
@@ -883,6 +845,36 @@ project, domain, role, assignments, Fernet, etc</li>
 </ul></li>
 </ul>
 <p>Keystone token is bound to a scope</p>
+</section>
+<section id="keystone-library-for-rust" class="slide level1">
+<h1>Keystone library for Rust</h1>
+<ul>
+<li>AuthN/Z are complex</li>
+<li>Good python libs for OIDC/Scim are rare and mostly unmaintained</li>
+<li>A standalone component (Keystone extension) offers best
+flexibility</li>
+<li>SDK/CLI/TUI for OpenStack in Rust already exists and is useful (i.e.
+proxy to Keystone)</li>
+<li>Library for Keystone is necessary
+<ul>
+<li>issuing a token touches nearly every angle of Keystone: user,
+project, domain, role, assignments, Fernet, etc</li>
+<li>direct access to the database is unavoidable</li>
+</ul></li>
+<li>Fernet (decrypt/encrypt), msgpack (encode/decode)</li>
+</ul>
+</section>
+<section id="adding-api-to-the-lib" class="slide level1">
+<h1>Adding API to the lib</h1>
+<p>Technically just peanuts compared to the lib itself</p>
+<ul>
+<li>token validation</li>
+<li>policy (not done yet)</li>
+<li>convert API request into the backend structure</li>
+<li>invoke backend method</li>
+<li>convert backend response to the API response</li>
+<li>oidc auth is not trivial though (it is more the CRUD)</li>
+</ul>
 </section>
 <section id="performance" class="slide level1">
 <h1>Performance</h1>
@@ -992,22 +984,22 @@ Benchmark 1: osc --os-cloud dev-keystone-rust identity user list
 <section id="roadmap" class="slide level1">
 <h1>Roadmap</h1>
 <ul>
-<li>Make KeystoneNG additional deployment component (to be tightly
-integrated with Rust OSC)</li>
+<li>Make KeystoneNG additional deployment component (integrated with
+Rust OSC)</li>
 <li>take care of advanced auth:
 <ul>
 <li>customer managed IdP</li>
 <li>Scim</li>
-<li>JWT auth (i.e. GitHub workflow)</li>
+<li>JWT auth (workload identity federation)</li>
 <li>security key</li>
 </ul></li>
 <li>overtake Auth and token validation</li>
 <li>continuous closing of the functional gaps to Keystone</li>
-<li>Source code:
+</ul>
+<p>Links:</p>
 <ul>
 <li><a href="https://github.com/gtema/keystone">https://github.com/gtema/keystone</a></li>
 <li><a href="https://github.com/gtema/openstack">https://github.com/gtema/openstack</a></li>
-</ul></li>
 </ul>
 </section>
     </div>

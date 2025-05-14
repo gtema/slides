@@ -14,11 +14,9 @@ Agenda
 
 - What I was working on
 
-- Keystone library for Rust
-
-- Adding API
-
 - Auth in Keystone
+
+- Extending Keystone using Rust
 
 - Performance
 
@@ -28,16 +26,12 @@ Agenda
 What I was working on
 ---------------------
 
-- Let OpenStack users (CSP customers) establish user federation (ldap, oidc) or
-  similar without involving administrators.
+- Allow users manage their Identity federation (ldap, oidc)
 
-- Federation using oidc is managed outside of Keystone itself (typically by
-  mod_auth_oidc module) what limits integration capabilities.
+- Federation in Keystone is managed by proxy software (typically by
+  mod_auth_oidc module or mod_shibboleth)
 
-- It is not trivially possible to reuse single external IdP by different
-  customers while being themselves in a control of such integration.
-
-- Modification of oidc federation requires restart of Keystone.
+- Modification of federation requires restart of Keystone.
 
 - Lack of SCIM (System for Cross-domain Identity Management) support
 
@@ -45,50 +39,9 @@ What I was working on
 
 - Lack of fine-granular access control (role explosion)
 
-- Integrate external authorization systems. This is often necessary when
-  OpenStack is just one offering in the service portfolio of the CSP.
+- Integrate external authorization systems.
 
 - Lack of service accounts concept.
-
-
-Keystone library for Rust
--------------------------
-
-- AuthN/Z are complex
-
-- Python libs for OIDC/Scim are rare and often unmaintained
-
-- A standalone component (Keystone extension) addressing Federation issues (like federation authentication)
-
-- SDK/CLI/TUI for OpenStack in Rust already exists and is useful (i.e. proxy to Keystone)
-
-- Library for Keystone is necessary
-
-  - issuing a token touches nearly every angle of Keystone: user, project,
-    domain, role, assignments, Fernet, etc
-
-  - direct access to the database is unavoidable
-
-- Fernet (decrypt/encrypt), msgpack (encode/decode)
-
-
-Adding API to the lib
----------------------
-
-Technically just peanuts compared to the lib itself
-
-- token validation
-
-- policy (not done yet)
-
-- convert API request into the backend structure
-
-- invoke backend method
-
-- convert backend response to the API response
-
-- oidc auth is not trivial though
-
 
 API Authentication
 ------------------
@@ -117,7 +70,6 @@ Authentication methods
 
 - x509
 
-
 Authentication vs authorization
 -------------------------------
 
@@ -135,6 +87,45 @@ Authentication vs authorization
   - system
 
 Keystone token is bound to a scope
+
+
+Keystone library for Rust
+-------------------------
+
+- AuthN/Z are complex
+
+- Good python libs for OIDC/Scim are rare and mostly unmaintained
+
+- A standalone component (Keystone extension) offers best flexibility
+
+- SDK/CLI/TUI for OpenStack in Rust already exists and is useful (i.e. proxy to Keystone)
+
+- Library for Keystone is necessary
+
+  - issuing a token touches nearly every angle of Keystone: user, project,
+    domain, role, assignments, Fernet, etc
+
+  - direct access to the database is unavoidable
+
+- Fernet (decrypt/encrypt), msgpack (encode/decode)
+
+
+Adding API to the lib
+---------------------
+
+Technically just peanuts compared to the lib itself
+
+- token validation
+
+- policy (not done yet)
+
+- convert API request into the backend structure
+
+- invoke backend method
+
+- convert backend response to the API response
+
+- oidc auth is not trivial though (it is more the CRUD)
 
 
 Performance 
@@ -281,8 +272,7 @@ OIDC auth
 Roadmap
 -------
 
-- Make KeystoneNG additional deployment component (to be tightly integrated
-  with Rust OSC)
+- Make KeystoneNG additional deployment component (integrated with Rust OSC)
 
 - take care of advanced auth:
 
@@ -290,7 +280,7 @@ Roadmap
 
   - Scim
 
-  - JWT auth (i.e. GitHub workflow)
+  - JWT auth (workload identity federation)
 
   - security key
 
@@ -298,8 +288,9 @@ Roadmap
 
 - continuous closing of the functional gaps to Keystone
 
-- Source code:
 
-  - `https://github.com/gtema/keystone <https://github.com/gtema/keystone>`_
+Links:
 
-  - `https://github.com/gtema/openstack <https://github.com/gtema/openstack>`_
+- `https://github.com/gtema/keystone <https://github.com/gtema/keystone>`_
+
+- `https://github.com/gtema/openstack <https://github.com/gtema/openstack>`_
