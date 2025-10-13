@@ -6,4 +6,4 @@ Presentations
 - [Rust OpenStack Keystone](rust_keystone/rust_keystone_reveal.html)
 - [Rust OpenStack Keystone - OpenStackEurope](rust_keystone_ose/rust_keystone_reveal.html)
 - [KeystoneNG - OSS2025](rust_keystone_oss_2025/rust_keystone_reveal.html)
-- [Rust CLI&TUI - OSS2025](rust_cli_tui_oss_2025/rust_keystone_reveal.html)
+- [Rust CLI&TUI - OSS2025](rust_cli_tui_oss_2025/rust_cli_tui_reveal.html)
