@@ -22,7 +22,7 @@ Why (and why not ...XYZ)
 What we wanted is:
 
   - Monitor cloud from end user perspective
-  - different metric physics (latencies, rates, occurences)
+  - different metric physics (latencies, rates, occurrences)
   - Events vs metrics (logs)
   - easy extensibility and readability and clarity
   - status page with SLA calculation (convert raw metrics into service status)
@@ -38,7 +38,7 @@ How (are we doing that)
 -----------------------
 
   - Ansible playbook as a testing scenario
-  - API metrics emited by OpenStackSDK under the hood
+  - API metrics emitted by OpenStackSDK under the hood
   - Additional metrics gathering plugins (i.e. static resources)
   - Metrics processed through StatsD and stored in Graphite
   - Metric Processor converts raw data into flags and semaphores with complex

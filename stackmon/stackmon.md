@@ -53,7 +53,7 @@ Observation platform for OpenStack based clouds
 What we wanted is:
 
   - Monitoring cloud from end user perspective
-  - different metric physics (latencies, rates, occurences)
+  - different metric physics (latencies, rates, occurrences)
   - Events vs metrics
   - easy extensibility and readability and clarity
   - status page with SLA calculation (convert raw metrics into service status)
@@ -68,10 +68,10 @@ What we wanted is:
 ## How (are we doing that)
 
   - Ansible playbook as a testing scenario
-  - Metrics emited by OpenStackSDK under the hood
+  - Metrics emitted by OpenStackSDK under the hood
   - Additional metrics gathering plugins (i.e. static resources)
   - Metrics processed through StatsD and stored in Graphite
-  - Metric Processor converts raw data into flags and semapthores with complex
+  - Metric Processor converts raw data into flags and semaphores with complex
     logic
   - Status dashboard visualizes service semaphores
   - Grafana visualizes service behavior, trends, etc

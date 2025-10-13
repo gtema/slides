@@ -37,7 +37,7 @@ Why new CLI
 
 - 183,000 loc openstacksdk
 
-- code created by humans reading api documentation and reimplementing functionalty
+- code created by humans reading api documentation and reimplementing functionality
 
 - slow (approx 1s start delay caused by python and plugins loading)
 
