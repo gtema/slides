@@ -120,7 +120,7 @@ IdP and mapping sharing
 -----------------------
 
 Possibility to have common IdP (i.e. Keycloak) and "private" (i.e. Okta) bound
-to ceratin domains.
+to certain domains.
 
 IdP sharing
 -----------
@@ -149,7 +149,7 @@ Mapping sharing
 
   - requires careful control of the `bound_claims`.
 
-  - typicall use-case: JWT login.
+  - typical use-case: JWT login.
 
 Claims based mapping
 --------------------
@@ -201,7 +201,7 @@ A new Keystone token payload to further improve federated authn security.
 
 - Binds project with roles.
 
-- Possiblly binds the user_id.
+- Possibly binds the user_id.
 
 - Does not require roles to be granted to the actor/scope explicitly.
 
