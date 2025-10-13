@@ -10,10 +10,13 @@ on:
       - synchronize
       - closed
 
+
 jobs:
   deploy-preview:
-
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
 
     steps:
       - name: Install pandoc
