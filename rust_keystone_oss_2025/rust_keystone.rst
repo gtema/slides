@@ -34,7 +34,7 @@ Agenda
 Introduction
 ------------
 
-We want to let OpenStack users (CSP customers) to have control over user federation without involving administrators.
+**We want to let OpenStack users (CSP customers) to have control over user federation without involving administrators.**
 
 - Federation using oidc is managed outside of Keystone itself.
 
@@ -96,7 +96,10 @@ WebAuthN support - demo
 
 .. code:: console
 
-   osc identity4 user passkey register
+   # Register the new passkey
+   osc identity4 user passkey register --current-user --description yubikey
+
+   # Authenticate with the passkey
    osc auth show
 
 Reworked federation
@@ -116,66 +119,83 @@ Reworked federation
 
 .. code:: console
 
+   # List all (visible) IDPs
    osc --os-cloud devstack-admin identity4 federation identity-provider list
+
+   # List all (visible) mappings
    osc --os-cloud devstack-admin identity4 federation mapping list
 
 IdP and mapping sharing
 -----------------------
 
-Possibility to have common IdP (i.e. Keycloak) and "private" (i.e. Okta) bound
-to certain domains.
+**Reworked IDP - domain mapping enables new scenarios:**
 
-IdP sharing
+- Common IdP (i.e. Keycloak, GitHub)
+
+- "private" (i.e. Okta) bound to certain domains.
+
+IdP binding
 -----------
 
-- `domain_id` set on IdP level
+**domain_id set on IdP level**
 
-  - all mappings and authenticated users belong to domain.
+- all mappings and authenticated users belong to domain.
 
-  - can only be seen by the domain users.
+- can only be seen by the domain users.
 
-  - typical usecase: customer own Okta tenant.
+*typical usecase: customer's own Okta tenant.*
 
-Mapping sharing
+Mapping binding
 ---------------
 
-- `domain_id` set on the Mapping level.
+**domain_id set on the Mapping level**
 
-  - shared IdP with the specific mappings.
+- shared IdP with the specific mappings.
 
-  - all authenticated users belong to the domain.
+- all authenticated users belong to the domain.
 
-  - can only be seen by the domain users.
+- can only be seen by the domain users.
 
-  - can be used to differentiate different domains served by the global IdP
-    (Google, Keycloak, etc).
+- can be used to differentiate different domains served by the global IdP
+  (Google, Keycloak, etc).
 
-  - requires careful control of the `bound_claims`.
+- requires careful control of the `bound_claims`.
 
-  - typical use-case: JWT login.
+*typical use-case: JWT login.*
 
-Claims based mapping
+Claims based binding
 --------------------
 
-- `domain_id` as the claim value
+**domain_id as the claim value**
 
-  - user<->domain relation identified by the authentication information.
+- user<->domain relation identified by the authentication information.
 
-  - typical use-case: single Keycloak realm with users in groups (group =
-    domain).
+*typical use-case: single Keycloak realm with users in groups (group =
+domain).*
+
+
+Federaition demo
+----------------
 
 .. code:: console
 
+   # Login with the private OKTA IDP
    osc --os-cloud devstack-oidc-okta auth show
+
+   # Login with the shared Keycloak and scope
    osc --os-cloud devstack-oidc-kc-shared identity4 federation identity-provider list
+
+   # Login with the JWT issued by KC with scope
    osc --os-cloud devstack-jwt-kc1 --auth-helper-cmd ./kc_auth_helper.sh auth show
+
+   # Login with the mapping bound to the project
    osc --os-cloud devstack-oidc-kc-jwt --auth-helper-cmd ./kc_auth_helper.sh auth show
 
 
 Workload federation
 -------------------
 
-No more hardcoded secrets for Zuul/GitHub/GitLab/etc!
+**No more hardcoded secrets for Zuul/GitHub/GitLab/etc!**
 
 - For every external system a dedicated IdP must be registered.
 
@@ -196,11 +216,44 @@ No more hardcoded secrets for Zuul/GitHub/GitLab/etc!
 
 `https://github.com/gtema/keystone-github-test/pull/1/ <https://github.com/gtema/keystone-github-test/pull/1/>`_
 
+Workload federation - JWT exchange (GitHub example)
+---------------------------------------------------
+
+.. code:: yaml
+
+  name: GH federation
+
+  on:
+    pull_request:
+
+  # Grant permission for the job to request an OIDC token
+  permissions:
+    id-token: write
+    contents: read
+
+  jobs:
+    test-validator:
+      runs-on: ubuntu-latest
+      steps:
+
+        - name: test-validator
+          id: get_token
+          run: |
+            TOKEN_JSON=$(curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=github-jwt")
+
+            TOKEN=$(echo $TOKEN_JSON | jq -r .value)
+            echo "token=$TOKEN" >> $GITHUB_OUTPUT
+
+        - name: Use the Token
+          run: |
+            curl -f "https://devstack.goncharov.v6.rocks/identity/v4/federation/identity_providers/9f8237fa457d4fe8b1ce4530b86a074c/jwt" \
+              -X POST -H "authorization: bearer ${{ steps.get_token.outputs.token }}" -H "openstack-mapping: github"
 
 Restricted token
 ----------------
 
-A new Keystone token payload to further improve federated authn security.
+**A new Keystone token payload to further improve federated authn security.**
 
 - Binds project with roles.
 
@@ -229,11 +282,16 @@ Restricted token - continue
 
 .. code:: console
 
+   # Login with JWT using the restricted mapping
    osc --os-cloud devstack-jwt-kc-restricted --auth-helper-cmd ./kc_auth_helper_org2_user2.sh auth show
 
+   # List user role assignments
    osc --os-cloud devstack-admin identity role-assignment list --user-id 0c6fb78d3acd476ea1b348d2b7ac6824
 
-   TOKEN=$(osc --os-cloud devstack-jwt-kc-restricted --auth-helper-cmd ./kc_auth_helper_org2_user2.sh auth show)
+   # Get the auth token
+   TOKEN=$(osc --os-cloud devstack-jwt-kc-restricted --auth-helper-cmd ./kc_auth_helper_org2_user2.sh auth login)
+
+   # Check the token renew
    curl -i  -X POST -H "Content-Type: application/json"  -d '
    { "auth": {
        "identity": {
@@ -261,7 +319,7 @@ Couldn't we just accept the JWT in OpenStack services:
 Service Accounts
 ----------------
 
-Service Account is a "user" that does not have credentials.
+**Service Account is a "user" that does not have credentials.**
 
 - Does not map to the "human", but rather to technical systems.
 
@@ -274,7 +332,7 @@ Service Account is a "user" that does not have credentials.
 API policy using Open Policy Agent
 ----------------------------------
 
-Policy enforcement is done with Open Policy Agent.
+**Policy enforcement is done with Open Policy Agent.**
 
 - full request and authn data part of the context. For the list every query
   parameter.
@@ -285,7 +343,7 @@ Policy enforcement is done with Open Policy Agent.
 
 - `delete` gets current state in the context.
 
-Example: prevent server update/deletion with the tag "prod" without special role.
+*Example: prevent server update/deletion with the tag "prod" without special role.*
 
 Policies can differ for different domains. Long-run - customer managed policy injects. 
 
