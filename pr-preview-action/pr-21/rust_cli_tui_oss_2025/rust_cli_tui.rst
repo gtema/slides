@@ -34,8 +34,9 @@ Agenda
 Why new CLI
 -----------
 
-openstackclient is so slow and inconsistent. It requires too much maintenance
-and monkey typing.
+openstackclient is so slow and inconsistent. 
+
+It requires too much maintenance and monkey typing.
 
 
 Can the current OSC be improved?
@@ -323,12 +324,14 @@ Similarly to the OSC supports views customization ``$XDG_CONFIG_HOME/openstack_t
       "c":
         action: ShowServerConsoleOutput
         description: Console output
+  ...
 
 Views configuration - global keybindings
 ----------------------------------------
 
 .. code:: yaml
 
+  ...
   global_keybindings:
     "F1":
       action:
@@ -348,12 +351,14 @@ Views configuration - global keybindings
     "<ctrl-r>":
       action: Refresh
       description: Reload data
+  ...
 
 Views configuration - aliases and views
 ---------------------------------------
 
 .. code:: yaml
 
+  ...
   # Mode aliases
   # <ALIAS>: <MODE>
   mode_aliases:
