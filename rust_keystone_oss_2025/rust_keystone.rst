@@ -78,7 +78,10 @@ WebAuthN support
 ----------------
 
 .. image:: webauthn_auth.svg
-   :height: 400px
+   :height: 500px
+
+WebAuthN support - demo
+-----------------------
 
 .. code:: yaml
 
@@ -208,6 +211,9 @@ A new Keystone token payload to further improve federated authn security.
 - Controls `allow_rescope` and `allow_renew`.
 
 - A prerequisite for Service Accounts.
+
+Restricted token - continue
+---------------------------
 
 - May be further extended with individual policy rules to implement
   fine-granular permissions beyond roles.
