@@ -115,7 +115,7 @@ Command syntax
 Auth
 ----
 
-Explicit authentication commands.
+**Explicit authentication commands**
 
 - ``osc auth show``
 
@@ -154,7 +154,7 @@ Extended auth
 Output format
 -------------
 
-Different ways to output the data.
+**Different ways to output the data**
 
 .. code:: console
 
@@ -175,7 +175,7 @@ Different ways to output the data.
 Curl mode
 ---------
 
-Send authenticated API requests.
+**Send authenticated API requests**
 
 .. code:: console
 
@@ -203,7 +203,7 @@ Auth caching
 Status based output coloring
 ----------------------------
 
-For resources with the `state` column results are colored.
+**For resources with the `state` column results are colored.**
 
 .. code:: console
 
