@@ -15,14 +15,14 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Install pandoc
         uses: pandoc/actions/setup@v1.1.1
         with:
           version: 3.8.2
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Build
         run: make
