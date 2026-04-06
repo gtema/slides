@@ -1,0 +1,13 @@
+sequenceDiagram
+
+    participant Authenticator
+    Client->>Server: Authentication request
+    Server->>Client: Challenge to be signed
+    Client->>Authenticator: Challenge
+    Authenticator->>+Authenticator: Sign with the private key and verify user presence
+    Authenticator->>Client: Signed Challenge
+    Client->>Server: Signed Challenge
+    Server->>Server: Verify signature
+    Server->>Client: Token
+
+
