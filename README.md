@@ -8,3 +8,4 @@ Presentations
 - [KeystoneNG - OSS2025](rust_keystone_oss_2025/rust_keystone_reveal.html)
 - [Rust CLI&TUI - OSS2025](rust_cli_tui_oss_2025/rust_cli_tui_reveal.html)
 - [OpenPolicyAgent in OpenStack - OSS2025](openstack_opa/openstack_opa_reveal.html)
+- [Zero-trust: rethinking authn/authz in OpenStack](zero_trust/zero_trust_reveal.html)
