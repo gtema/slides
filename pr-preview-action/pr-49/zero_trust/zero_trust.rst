@@ -386,7 +386,7 @@ Workloads: identity without credentials
 
 - A mapping rule grants it roles or permissions **on its own project only**
 
-- User can controll permissions of the VM
+- User can control permissions of the VM
 
 .. container:: notes
 
