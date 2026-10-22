@@ -1,1 +1,3 @@
-*.html
+# It is necessary to not exclude html files from git otherwise rendered pages
+# are not published in the PR preview
+# *.html
