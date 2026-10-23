@@ -524,7 +524,7 @@ Honest trade-offs: textbook vs <100 nodes (continue)
      the signing keys.
 
 The cost of zero-trust
-----------------------
+======================
 
 - **Operators run SPIRE**: servers, an agent on every host, trust domain, registration, rotation, monitoring, backup. It sits under every service call
 
@@ -534,11 +534,18 @@ The cost of zero-trust
 
 - **SPIRE is a new tier-0 dependency**: if it fails or a CA rotation goes wrong, every mTLS handshake fails, and Keystone cannot help recover it. A trust-domain root key compromise is a cloud-wide event
 
-- **Keystone is stateful**: Raft means disk, snapshots, quorum, backup, restore and member replacement for people used to stateless API pods
+- **Keystone** must change operational model
+
+  - **stateful**: Raft means disk, snapshots, quorum, backup, restore and member replacement for people used to stateless API pods
+
+  - **TLS termination**: mTLS for control plane require doing termination
+
+  - **Oauth2 OP**: must move inside Keystone
 
 - Service maintainers change policy handling; SDK authors take on key management
 
 - **Shared contracts need community agreement**: header grammar and operation vocabulary only work if projects adopt the same one, and each service adopts on its own schedule. Expect a long partially-adopted period
+
 
 When textbook met reality
 -------------------------

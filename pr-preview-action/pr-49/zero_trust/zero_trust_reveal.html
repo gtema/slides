@@ -1371,9 +1371,10 @@ CAEP / Shared Signals): not part of the design.</li>
 not for the signing keys.</li>
 </ul>
 </aside>
-</section>
-<section id="the-cost-of-zero-trust" class="slide level2">
-<h2>The cost of zero-trust</h2>
+</section></section>
+<section>
+<section id="the-cost-of-zero-trust" class="title-slide slide level1">
+<h1>The cost of zero-trust</h1>
 <ul>
 <li><strong>Operators run SPIRE</strong>: servers, an agent on every
 host, trust domain, registration, rotation, monitoring, backup. It sits
@@ -1387,9 +1388,15 @@ expire</li>
 CA rotation goes wrong, every mTLS handshake fails, and Keystone cannot
 help recover it. A trust-domain root key compromise is a cloud-wide
 event</li>
-<li><strong>Keystone is stateful</strong>: Raft means disk, snapshots,
-quorum, backup, restore and member replacement for people used to
-stateless API pods</li>
+<li><strong>Keystone</strong> must change operational model
+<ul>
+<li><strong>stateful</strong>: Raft means disk, snapshots, quorum,
+backup, restore and member replacement for people used to stateless API
+pods</li>
+<li><strong>TLS termination</strong>: mTLS for control plane require
+doing termination</li>
+<li><strong>Oauth2 OP</strong>: must move inside Keystone</li>
+</ul></li>
 <li>Service maintainers change policy handling; SDK authors take on key
 management</li>
 <li><strong>Shared contracts need community agreement</strong>: header
