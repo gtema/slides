@@ -532,9 +532,13 @@ The cost of zero-trust
 
 - Outage of the write path costs: no logins, no refresh, no exchange, no attestation for new VMs. Existing credentials keep working until they expire
 
+- **SPIRE is a new tier-0 dependency**: if it fails or a CA rotation goes wrong, every mTLS handshake fails, and Keystone cannot help recover it. A trust-domain root key compromise is a cloud-wide event
+
+- **Keystone is stateful**: Raft means disk, snapshots, quorum, backup, restore and member replacement for people used to stateless API pods
+
 - Service maintainers change policy handling; SDK authors take on key management
 
-- One central authority: a bad grant write has cloud-wide reach. It needs canarying, not just replicas
+- **Shared contracts need community agreement**: header grammar and operation vocabulary only work if projects adopt the same one, and each service adopts on its own schedule. Expect a long partially-adopted period
 
 When textbook met reality
 -------------------------

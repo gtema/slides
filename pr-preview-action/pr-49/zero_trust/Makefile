@@ -12,7 +12,7 @@ all: $(IMAGE_OBJS) $(SLIDES_OBJ)
 	mmdc -i $< -o $@ -b transparent
 
 %_reveal.html: %.rst
-	pandoc -t revealjs -s $< -o $@ --slide-level=2 -M title=$(TITLE) -M subtitle="How to modernize OpenStack" -M author="Artem Goncharov" -M date="2026-10-19" -V width=1920 -V height=1080 -V minScale=0.2 -V maxScale=2 -V theme=sky -V center=false -V revealjs-url=https://unpkg.com/reveal.js@^5.2.0 -V plugins=RevealZoom,RevealNotes,RevealSearch --css style.css --embed-resources --standalone
+	pandoc -t revealjs -s $< -o $@ --slide-level=2 -M title=$(TITLE) -M subtitle="How to modernize OpenStack" -M author="Artem Goncharov" -M date="2026-10-23" -V width=1920 -V height=1080 -V minScale=0.2 -V maxScale=2 -V theme=sky -V center=false -V revealjs-url=https://unpkg.com/reveal.js@^5.2.0 -V plugins=RevealZoom,RevealNotes,RevealSearch --css style.css --embed-resources --standalone
 
 images: $(IMAGE_OBJS)
 

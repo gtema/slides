@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Artem Goncharov">
-  <meta name="dcterms.date" content="2026-10-19">
+  <meta name="dcterms.date" content="2026-10-23">
   <title>Zero-trust: rethinking authn/authz in OpenStack</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -786,7 +786,7 @@ margin-left: 1em;
   <h1 class="title">Zero-trust: rethinking authn/authz in OpenStack</h1>
   <p class="subtitle">How to modernize OpenStack</p>
   <p class="author">Artem Goncharov</p>
-  <p class="date">2026-10-19</p>
+  <p class="date">2026-10-23</p>
 </section>
 
 <section id="agenda" class="title-slide slide level1">
@@ -1383,10 +1383,19 @@ token lifetime becomes an availability setting</li>
 <li>Outage of the write path costs: no logins, no refresh, no exchange,
 no attestation for new VMs. Existing credentials keep working until they
 expire</li>
+<li><strong>SPIRE is a new tier-0 dependency</strong>: if it fails or a
+CA rotation goes wrong, every mTLS handshake fails, and Keystone cannot
+help recover it. A trust-domain root key compromise is a cloud-wide
+event</li>
+<li><strong>Keystone is stateful</strong>: Raft means disk, snapshots,
+quorum, backup, restore and member replacement for people used to
+stateless API pods</li>
 <li>Service maintainers change policy handling; SDK authors take on key
 management</li>
-<li>One central authority: a bad grant write has cloud-wide reach. It
-needs canarying, not just replicas</li>
+<li><strong>Shared contracts need community agreement</strong>: header
+grammar and operation vocabulary only work if projects adopt the same
+one, and each service adopts on its own schedule. Expect a long
+partially-adopted period</li>
 </ul>
 </section>
 <section id="when-textbook-met-reality" class="slide level2">
