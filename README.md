@@ -9,3 +9,4 @@ Presentations
 - [Rust CLI&TUI - OSS2025](rust_cli_tui_oss_2025/rust_cli_tui_reveal.html)
 - [OpenPolicyAgent in OpenStack - OSS2025](openstack_opa/openstack_opa_reveal.html)
 - [Zero-trust: rethinking authn/authz in OpenStack](zero_trust/zero_trust_reveal.html)
+- [Zero-trust: short version (requirements, state, path)](zero_trust/zero_trust_short_reveal.html)
