@@ -41,7 +41,6 @@ display: block;
 .reveal .sourceCode { 
 overflow: visible;
 }
-
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -1272,7 +1271,7 @@ write path is down</li>
 <h2>Raft details: harder</h2>
 <ul>
 <li>Replicas never authenticate (no signing key on a replica: a
-compromised replicat could mint tokens for the whole cloud)</li>
+compromised replica could mint tokens for the whole cloud)</li>
 <li>Secrets must stay away from replicas: tier-keyed encryption, second
 Raft group for replicas outside the trust zone</li>
 <li>Learners must serve local reads with a version</li>

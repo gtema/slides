@@ -453,7 +453,7 @@ Raft details: easier
 Raft details: harder
 --------------------
 
-- Replicas never authenticate (no signing key on a replica: a compromised replicat could mint tokens for the whole cloud)
+- Replicas never authenticate (no signing key on a replica: a compromised replica could mint tokens for the whole cloud)
 
 - Secrets must stay away from replicas: tier-keyed encryption, second Raft group for replicas outside the trust zone
 
