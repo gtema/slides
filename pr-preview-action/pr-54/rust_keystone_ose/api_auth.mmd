@@ -1,9 +1,0 @@
-sequenceDiagram
-    User->>Keystone: authN + authZ request
-    Keystone->>Keystone: Verify authN data
-    Keystone->>Keystone: Verify authZ
-    Keystone->>User: auth token with fixed authZ
-    User->>ServiceX: API request with X-Auth-token
-    ServiceX->>Keystone: Validate user token
-    Keystone->>ServiceX: user permissions
-    ServiceX->>User: API response
