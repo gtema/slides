@@ -13,7 +13,7 @@ Agenda
 
 - **How we get there**: the target design and the roadmap
 
-- **Lessons learned**: what it costs and what we would do again
+- **Costs**: what it costs and what we would do again
 
 .. container:: notes
 
@@ -24,7 +24,7 @@ What are we protecting? Three questions on every call
 
 - **Who** is calling?
 
-- **Where** (which project, domain, system) does the call act?
+- **Where** (which project, domain, system) the target resource is located?
 
 - **What** is this caller allowed to do there, *now*?
 
@@ -126,13 +126,13 @@ Gap analysis
    * - Requirement
      - Today
    * - No trust by network position
-     - Plaintext back-channel, "internal" endpoints
+     - Trust in headers
    * - Identity from the runtime
      - Service passwords in config files, `clouds.yaml`
    * - Useless when stolen
      - Bearer Fernet token
    * - Least privilege per request
-     - Scope and roles frozen at issuance, `member` or `admin` per workload
+     - Scope and roles frozen in cache, `member` or `admin` per workload
    * - Bounded freshness
      - Validation caches: availability bought with staleness
    * - Auditable delegation
@@ -168,7 +168,7 @@ Services: identity from the handshake
 
 - Internal interfaces terminate mTLS: **the TLS peer is the identity**
 
-- Gone: service passwords, `X-Service-Token`, plaintext back-channel
+- Gone: service passwords, `X-Service-Token`
 
 .. container:: notes
 
@@ -250,7 +250,7 @@ Lessons learned
 
 - **Revocation expectations**: operators expect "immediate", get "lag, with a number"
 
-- **Python world needs patches**: middleware and keystoneauth, SPIFFE support still WIP
+- **Python world needs patches**: middleware and keystoneauth
 
 - **Silent retries hide misconfiguration**: a wrong SVID made storage init hang with no error line
 
@@ -298,7 +298,7 @@ Advice and takeaways
 
 - Keep every step additive; be honest about what you do not do
 
-- Join the discussion, raise your voice so upstream sees the demand:
+- Join the discussion, raise your voice so upstream acknowledges the demand:
 
   - https://github.com/openstack-experimental/keystone
 
