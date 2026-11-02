@@ -1,0 +1,20 @@
+gantt
+    title Adoption by release cycle (indicative)
+    dateFormat YYYY-MM
+    axisFormat %Y
+    tickInterval 12month
+    section Identity
+    SPIRE + secretless control plane :a1, 2026-10, 2027-10
+    Tenant workload identity         :a2, 2027-04, 2029-04
+    section Tokens
+    JWT validation, then JWT default :b1, 2026-10, 2028-04
+    Fernet validate-only, then off   :b3, 2028-10, 2029-10
+    section Authorization
+    Per-request target + check API   :c1, 2026-10, 2028-10
+    Scope-less JWT (gated)           :crit, c2, 2028-04, 2028-10
+    Permissions + policy engine      :c3, 2028-04, 2029-10
+    section Delegation
+    Grants + on-behalf-of            :d1, 2026-10, 2027-10
+    Service migrations, trusts off   :d2, 2027-10, 2030-04
+    section Data plane
+    Learners, keystone-dataplane     :e1, 2026-10, 2029-04
