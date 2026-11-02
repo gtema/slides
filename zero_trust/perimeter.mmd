@@ -8,8 +8,8 @@ flowchart LR
     end
     cfg[("service passwords<br/>in config files")]:::bad
     attacker ==>|"foothold"| nova
-    nova -->|"X-Service-Token, admin role"| neutron
-    nova -->|"plaintext back-channel"| ks
+    nova -->|"X-Service-Token, admin/service role"| neutron
+    nova -->|"X-Subject-Token back-channel"| ks
     nova -.- cfg
     nova ==>|"same authority as nova"| glance
     classDef bad fill:#fdd,stroke:#c00,color:#000
