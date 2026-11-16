@@ -1,0 +1,12 @@
+flowchart LR
+    user["Users, CLI, SDKs"]
+    svc["Control-plane services"]
+    op["Operator on the host"]
+    subgraph ks["Keystone"]
+        pub["public<br/>JWT + DPoP"]
+        int["internal<br/>SPIFFE mTLS"]
+        adm["admin<br/>Unix socket + SVID"]
+    end
+    user -->|"HTTPS"| pub
+    svc -->|"mTLS, peer = SVID"| int
+    op -->|"local only"| adm

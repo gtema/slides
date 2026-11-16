@@ -1,0 +1,13 @@
+sequenceDiagram
+    participant NC as nova-compute<br/>(per-host SVID)
+    participant K as Keystone
+    participant VM as VM: cloud-init + spire-agent
+    participant SS as SPIRE server
+    NC->>K: POST /v4/vendordata (project, instance)
+    K->>K: verify placement with Nova<br/>fail closed (503) if Nova unreachable
+    K-->>NC: attestation JWT (minutes)
+    NC->>VM: vendor_data.json
+    VM->>SS: attest with JWT
+    SS->>K: GET /v4/spiffe/domain/jwks
+    SS-->>VM: SVID spiffe://td/project/P/instance/I
+    Note over VM: no password, no app credential,<br/>no EC2 key in the guest
